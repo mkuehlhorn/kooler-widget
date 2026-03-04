@@ -1,103 +1,116 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
+import type { KeyboardEvent, FormEvent, Ref } from 'react';
 import { SendIcon } from './Icons';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
-export function ChatInput({ onSend, disabled }: ChatInputProps) {
+export interface ChatInputHandle { focus: () => void }
+
+export const ChatInput = forwardRef(function ChatInput(
+  { onSend, disabled = false }: ChatInputProps,
+  ref: Ref<ChatInputHandle>
+) {
+  const [value, setValue] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  useImperativeHandle(ref, () => ({ focus: () => textareaRef.current?.focus() }));
+
+  // Auto-focus on mount (desktop only)
   useEffect(() => {
-    if (textareaRef.current && window.innerWidth > 480) {
-      textareaRef.current.focus();
+    if (window.innerWidth > 480) {
+      const t = setTimeout(() => textareaRef.current?.focus(), 300);
+      return () => clearTimeout(t);
     }
   }, []);
 
-  const handleAutoResize = useCallback(() => {
-    const el = textareaRef.current;
-    if (!el) return;
-    el.style.height = 'auto';
-    el.style.height = `${Math.min(Math.max(el.scrollHeight, 36), 100)}px`;
-  }, []);
+  // Re-focus after AI responds
+  useEffect(() => {
+    if (!disabled) setTimeout(() => textareaRef.current?.focus(), 100);
+  }, [disabled]);
 
-  const handleSend = useCallback(() => {
-    const el = textareaRef.current;
-    if (!el) return;
-    const value = el.value.trim();
-    if (!value || disabled) return;
-    onSend(value);
-    el.value = '';
-    el.style.height = '36px';
-    el.focus();
-  }, [onSend, disabled]);
+  // Auto-resize textarea
+  useEffect(() => {
+    const ta = textareaRef.current;
+    if (ta) { ta.style.height = 'auto'; ta.style.height = `${Math.min(ta.scrollHeight, 100)}px`; }
+  }, [value]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        handleSend();
-      }
-    },
-    [handleSend]
-  );
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    const trimmed = value.trim();
+    if (trimmed && !disabled) { onSend(trimmed); setValue(''); setTimeout(() => textareaRef.current?.focus(), 0); }
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); }
+  }
 
   return (
-    <div
-      className="px-3 py-3 shrink-0"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.18)' }}
-    >
-      <div
-        className="flex items-end gap-2"
-        style={{
-          background: 'rgba(255, 255, 255, 0.92)',
-          border: '1px solid rgba(255, 255, 255, 0.65)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          boxShadow: '0 5px 20px rgba(0,0,0,0.18)',
-          borderRadius: 9999,
-          padding: '4px 4px 4px 16px',
-        }}
+    <form onSubmit={handleSubmit} className="chat-input-form">
+      <textarea
+        ref={textareaRef}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        disabled={disabled}
+        placeholder={disabled ? 'Waiting for response...' : 'Type your message here...'}
+        rows={1}
+        className="chat-input-textarea"
+      />
+      <button
+        type="submit"
+        disabled={!(!disabled && value.trim().length > 0)}
+        className="chat-input-send"
+        aria-label="Send message"
       >
-        <textarea
-          ref={textareaRef}
-          className="weggy-input flex-1"
-          placeholder="Type a message..."
-          rows={1}
-          disabled={disabled}
-          onKeyDown={handleKeyDown}
-          onInput={handleAutoResize}
-          aria-label="Type your message"
-          style={{ height: 36 }}
-        />
-        <button
-          onClick={handleSend}
-          disabled={disabled}
-          type="button"
-          aria-label="Send message"
-          className="shrink-0 flex items-center justify-center text-white transition-all"
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            background: disabled ? '#d1d5db' : '#E8713A',
-            boxShadow: disabled ? 'none' : '0 4px 14px rgba(232,113,58,0.40)',
-            border: 'none',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            transition: 'background 150ms ease, box-shadow 150ms ease, transform 100ms ease',
-            flexShrink: 0,
-          }}
-          onMouseEnter={(e) => {
-            if (!disabled) (e.currentTarget as HTMLButtonElement).style.background = '#D4622A';
-          }}
-          onMouseLeave={(e) => {
-            if (!disabled) (e.currentTarget as HTMLButtonElement).style.background = '#E8713A';
-          }}
-        >
-          <SendIcon size={14} />
-        </button>
-      </div>
-    </div>
+        <SendIcon size={14} />
+      </button>
+    </form>
   );
+});
+
+// Self-injected styles — PRD spec exactly
+const STYLES = `
+/* Pill input bar — height 36px */
+.chat-input-form {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.95); border-radius: 9999px;
+  margin: 0 1rem 0.75rem; padding: 0.1875rem; padding-left: 1rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: none; height: 36px;
+}
+.chat-input-textarea {
+  flex: 1; resize: none; padding: 0;
+  font-size: 0.6875rem; color: rgba(0,0,0,0.8);
+  background: transparent; border: none; outline: none;
+  max-height: 100px; line-height: 1.4; font-family: inherit; height: auto;
+}
+.chat-input-textarea::placeholder { color: rgba(0,0,0,0.5); font-size: 0.6875rem; }
+.chat-input-textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Send button — 28px circle */
+.chat-input-send {
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  background: #E8713A; color: white; border: none; border-radius: 50%;
+  cursor: pointer; transition: all 150ms ease; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.chat-input-send:hover:not(:disabled) { background: #D4622A; }
+.chat-input-send:disabled { background: #E8713A; opacity: 0.7; cursor: default; }
+.chat-input-send svg { width: 14px; height: 14px; }
+
+@media (max-width: 480px) {
+  .chat-input-form { margin: 0 0.75rem 0.5rem; height: 52px; padding: 6px 6px 6px 16px; }
+  .chat-input-textarea { font-size: 18px; }
+  .chat-input-textarea::placeholder { font-size: 16px; }
+  .chat-input-send { width: 40px; height: 40px; }
+  .chat-input-send svg { width: 20px; height: 20px; }
+}
+`
+if (typeof document !== 'undefined') {
+  const id = 'weggy-chat-input-styles'
+  if (!document.getElementById(id)) {
+    const el = document.createElement('style'); el.id = id; el.textContent = STYLES; document.head.appendChild(el)
+  }
 }

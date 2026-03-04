@@ -1,51 +1,27 @@
 interface SuggestionChipsProps {
   chips: string[];
-  onChipClick: (chip: string) => void;
-  primaryColor: string;
+  onSelect: (chip: string) => void;
 }
 
-export function SuggestionChips({ chips, onChipClick }: SuggestionChipsProps) {
-  if (!chips.length) return null;
+export const DEFAULT_SUGGESTION_CHIPS = [
+  "My garage door won't open",
+  'I need a spring replaced',
+  'Schedule a service call',
+  'Get a free estimate',
+];
 
-  const displayChips = chips.slice(0, 4);
-
+export function SuggestionChips({ chips, onSelect }: SuggestionChipsProps) {
+  if (!chips || chips.length === 0) return null;
   return (
-    <div className="weggy-suggestion-chips px-4 py-2 shrink-0">
-      <div
-        className="grid gap-2"
-        style={{ gridTemplateColumns: displayChips.length > 2 ? '1fr 1fr' : '1fr' }}
-      >
-        {displayChips.map((chip) => (
+    <div className="suggestion-chips-container">
+      <p className="suggestion-chips-label">Suggestions on what to ask Weggy</p>
+      <div className="suggestion-chips-grid">
+        {chips.map((chip, index) => (
           <button
-            key={chip}
-            onClick={() => onChipClick(chip)}
+            key={index}
+            className="suggestion-chip"
+            onClick={() => onSelect(chip)}
             type="button"
-            className="text-left rounded-full px-3 py-2 text-xs font-medium transition-all"
-            style={{
-              border: '1.5px solid #E8713A',
-              color: '#E8713A',
-              background: 'rgba(255, 255, 255, 0.65)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              cursor: 'pointer',
-              lineHeight: 1.3,
-              boxShadow: '0 1px 4px rgba(232,113,58,0.12)',
-              transition: 'background 150ms ease, color 150ms ease, transform 100ms ease',
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLButtonElement;
-              el.style.background = '#E8713A';
-              el.style.color = 'white';
-              el.style.transform = 'translateY(-1px)';
-              el.style.boxShadow = '0 4px 12px rgba(232,113,58,0.35)';
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLButtonElement;
-              el.style.background = 'rgba(255, 255, 255, 0.65)';
-              el.style.color = '#E8713A';
-              el.style.transform = 'translateY(0)';
-              el.style.boxShadow = '0 1px 4px rgba(232,113,58,0.12)';
-            }}
           >
             {chip}
           </button>
@@ -53,4 +29,37 @@ export function SuggestionChips({ chips, onChipClick }: SuggestionChipsProps) {
       </div>
     </div>
   );
+}
+
+// Self-injected styles — PRD spec exactly
+const STYLES = `
+.suggestion-chips-container { padding: 0.5rem 0.75rem; background: transparent; }
+.suggestion-chips-label {
+  font-size: 0.6875rem; color: rgba(0,0,0,0.5);
+  text-align: center; margin: 0 0 0.625rem; font-weight: 400;
+}
+.suggestion-chips-grid {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+  max-width: 480px; margin: 0 auto;
+}
+.suggestion-chip {
+  display: inline-flex; align-items: center; padding: 0.1875rem 0.75rem;
+  font-size: 0.6875rem; color: rgba(0,0,0,0.75); background: white;
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 9999px;
+  cursor: pointer; white-space: nowrap;
+  transition: all 150ms ease; font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.suggestion-chip:hover {
+  border-color: #E8713A; color: #E8713A;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.suggestion-chip:active { transform: scale(0.98); }
+@media (max-width: 480px) { .suggestion-chips-container { display: none; } }
+`
+if (typeof document !== 'undefined') {
+  const id = 'weggy-suggestion-chips-styles'
+  if (!document.getElementById(id)) {
+    const el = document.createElement('style'); el.id = id; el.textContent = STYLES; document.head.appendChild(el)
+  }
 }

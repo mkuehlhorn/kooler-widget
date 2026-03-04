@@ -12,8 +12,6 @@
  *   data-position="bottom-right"
  *   data-market="us"
  *   data-language="en"
- *   data-primary-color="#1B2F5B"
- *   data-accent-color="#F97316"
  *   async
  * ></script>
  */
@@ -27,7 +25,6 @@
     if (document.currentScript) {
       return document.currentScript as HTMLScriptElement;
     }
-    // Fallback for async scripts in older browsers
     const scripts = document.querySelectorAll<HTMLScriptElement>(
       'script[src*="loader.js"]'
     );
@@ -51,20 +48,43 @@
   const mode = attr('mode', 'dock') as 'dock' | 'inline';
   const market = attr('market', 'us');
   const language = attr('language', 'en');
-  const primaryColor = attr('primary-color', '#1B2F5B');
-  const accentColor = attr('accent-color', '#F97316');
+  const primaryColor = attr('primary-color', '#E8713A');
+  const accentColor = attr('accent-color', '#E8713A');
   const agentName = attr('agent-name', 'Weggy');
   const companyName = attr('company-name', 'Kooler Garage Doors');
   const greeting = attr(
     'greeting',
-    "Hi! I'm Weggy, your Kooler Garage Doors assistant. Are you dealing with an emergency, or would you like to schedule a service?"
+    "Hi, I'm Weggy — how can I help you today?"
   );
   const suggestionChips = attr(
     'suggestion-chips',
-    'I need a repair,Schedule an installation,Get a free quote,Emergency service'
+    "My garage door won't open,I need a spring replaced,Schedule a service call,Get a free estimate"
   );
   const target = attr('target', '');
   const useMock = attr('mock', 'false') === 'true';
+
+  // ─── Dimensions (PRD spec) ────────────────────────────────────────────────────
+  // Collapsed: 460×64  Expanded: 720×540  Margin: 20px
+
+  const COLLAPSED_W = 460;
+  const COLLAPSED_H = 64;
+  const EXPANDED_W  = 720;
+  const EXPANDED_H  = 540;
+  const MARGIN      = 20;
+
+  function isMobile(): boolean {
+    return window.innerWidth <= 480;
+  }
+
+  function collapsedDimensions(): { w: string; h: string } {
+    if (isMobile()) return { w: 'calc(100vw - 40px)', h: '56px' };
+    return { w: `${COLLAPSED_W}px`, h: `${COLLAPSED_H}px` };
+  }
+
+  function expandedDimensions(): { w: string; h: string } {
+    if (isMobile()) return { w: '100vw', h: '100dvh' };
+    return { w: `${EXPANDED_W}px`, h: `${EXPANDED_H}px` };
+  }
 
   // ─── Build iframe src URL ─────────────────────────────────────────────────────
 
@@ -94,6 +114,34 @@
   let isReady = false;
   let iframe: HTMLIFrameElement | null = null;
 
+  // ─── Apply dimensions to iframe ───────────────────────────────────────────────
+
+  function applyCollapsedSize(): void {
+    if (!iframe) return;
+    const { w, h } = collapsedDimensions();
+    const isRight = position === 'bottom-right';
+    Object.assign(iframe.style, {
+      width: w,
+      height: h,
+      right: isRight ? `${MARGIN}px` : 'auto',
+      left: isRight ? 'auto' : `${MARGIN}px`,
+      bottom: isMobile() ? '0' : `${MARGIN}px`,
+    });
+  }
+
+  function applyExpandedSize(): void {
+    if (!iframe) return;
+    const { w, h } = expandedDimensions();
+    const isRight = position === 'bottom-right';
+    Object.assign(iframe.style, {
+      width: w,
+      height: h,
+      right: isMobile() ? '0' : isRight ? `${MARGIN}px` : 'auto',
+      left: isMobile() ? '0' : isRight ? 'auto' : `${MARGIN}px`,
+      bottom: isMobile() ? '0' : `${MARGIN}px`,
+    });
+  }
+
   // ─── Create the iframe ────────────────────────────────────────────────────────
 
   function createIframe(): HTMLIFrameElement {
@@ -102,22 +150,27 @@
     el.src = buildIframeSrc();
     el.title = `${agentName} — ${companyName}`;
     el.allow = 'microphone; camera';
+    el.setAttribute('allowtransparency', 'true');
 
-    const isRight = position === 'bottom-right';
     const isInline = mode === 'inline';
+    const isRight  = position === 'bottom-right';
+    const { w, h } = collapsedDimensions();
 
     Object.assign(el.style, {
       position: isInline ? 'relative' : 'fixed',
-      bottom: isInline ? 'auto' : '0',
-      right: isInline ? 'auto' : isRight ? '16px' : 'auto',
-      left: isInline ? 'auto' : isRight ? 'auto' : '0',
-      width: isInline ? '100%' : '420px',
-      height: isInline ? '600px' : '700px',
-      maxHeight: isInline ? '600px' : '100dvh',
+      bottom: isInline ? 'auto' : `${MARGIN}px`,
+      right:  isInline ? 'auto' : isRight ? `${MARGIN}px` : 'auto',
+      left:   isInline ? 'auto' : isRight ? 'auto' : `${MARGIN}px`,
+      width:  isInline ? '100%' : w,
+      height: isInline ? '600px' : h,
+      maxHeight: isInline ? '600px' : 'none',
       border: 'none',
       background: 'transparent',
+      backgroundColor: 'transparent',
       zIndex: '999999',
       display: 'block',
+      transition: 'width 0.3s ease, height 0.3s ease',
+      overflow: 'hidden',
     });
 
     return el;
@@ -135,35 +188,28 @@
   function open(): void {
     if (!isReady) return;
     isOpen = true;
+    applyExpandedSize();
     postToWidget('weggy:open');
   }
 
   function close(): void {
     isOpen = false;
+    applyCollapsedSize();
     postToWidget('weggy:close');
   }
 
   function toggle(): void {
-    if (isOpen) {
-      close();
-    } else {
-      open();
-    }
+    if (isOpen) { close(); } else { open(); }
   }
 
-  function getIsOpen(): boolean {
-    return isOpen;
-  }
+  function getIsOpen(): boolean { return isOpen; }
 
   // ─── Listen for messages from the iframe ─────────────────────────────────────
 
   window.addEventListener('message', (event: MessageEvent) => {
     if (!iframe) return;
-    // Only accept messages from our widget origin
-    if (!event.origin.startsWith(widgetHost.replace(/\/$/, ''))) {
-      // In mock/dev mode, also accept same-origin
-      if (event.origin !== window.location.origin) return;
-    }
+    const widgetOrigin = widgetHost.replace(/\/$/, '');
+    if (!event.origin.startsWith(widgetOrigin) && event.origin !== window.location.origin) return;
 
     const data = event.data as { source?: string; type?: string };
     if (data?.source !== 'weggy-widget') return;
@@ -172,23 +218,14 @@
       case 'weggy:ready':
         isReady = true;
         break;
-
       case 'weggy:open':
         isOpen = true;
+        applyExpandedSize();
         break;
-
       case 'weggy:close':
         isOpen = false;
+        applyCollapsedSize();
         break;
-
-      case 'weggy:resize': {
-        const resizeData = data as { height?: number };
-        if (resizeData.height && iframe) {
-          iframe.style.height = `${resizeData.height}px`;
-        }
-        break;
-      }
-
       default:
         break;
     }
@@ -197,22 +234,18 @@
   // ─── Mount ────────────────────────────────────────────────────────────────────
 
   function mount(): void {
-    if (document.getElementById('weggy-widget-iframe')) return; // Already mounted
+    if (document.getElementById('weggy-widget-iframe')) return;
 
     iframe = createIframe();
 
     if (mode === 'inline' && target) {
       const container = document.getElementById(target);
-      if (container) {
-        container.appendChild(iframe);
-        return;
-      }
+      if (container) { container.appendChild(iframe); return; }
     }
 
     document.body.appendChild(iframe);
   }
 
-  // Mount when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mount);
   } else {
@@ -222,10 +255,7 @@
   // ─── Destroy ──────────────────────────────────────────────────────────────────
 
   function destroy(): void {
-    if (iframe) {
-      iframe.remove();
-      iframe = null;
-    }
+    if (iframe) { iframe.remove(); iframe = null; }
     isOpen = false;
     isReady = false;
     delete (window as Window & { WeggyWidget?: WeggyWidgetAPI }).WeggyWidget;

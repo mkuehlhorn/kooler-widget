@@ -1,78 +1,138 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react'
 
 interface CollapsedBarProps {
-  agentName: string;
-  greeting: string;
-  avatarPath: string;
-  primaryColor: string;
-  onOpen: () => void;
+  onExpand: () => void
+  greetingText?: string
+  avatarUrl?: string
 }
 
-const MIN_PULSE_DELAY_MS   = 8000;
-const MAX_PULSE_DELAY_MS   = 15000;
-const PULSE_DURATION_MS    = 2200;
-const FIRST_PULSE_DELAY_MS = 5000;
+function randomInterval(): number { return 8000 + Math.random() * 7000 }
 
-export function CollapsedBar({ agentName, avatarPath, onOpen }: CollapsedBarProps) {
-  const [isPulsing, setIsPulsing] = useState(false);
-  const [hasOpened, setHasOpened] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const schedulePulse = useCallback((delayMs: number) => {
-    timerRef.current = setTimeout(() => {
-      setIsPulsing(true);
-      timerRef.current = setTimeout(() => {
-        setIsPulsing(false);
-        const next =
-          MIN_PULSE_DELAY_MS +
-          Math.random() * (MAX_PULSE_DELAY_MS - MIN_PULSE_DELAY_MS);
-        schedulePulse(next);
-      }, PULSE_DURATION_MS);
-    }, delayMs);
-  }, []);
+export function CollapsedBar({
+  onExpand,
+  greetingText = "Hi, I'm Weggy — how can I help you today?",
+  avatarUrl,
+}: CollapsedBarProps) {
+  const [isPulsing, setIsPulsing] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (hasOpened) return;
-    schedulePulse(FIRST_PULSE_DELAY_MS);
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  }, [hasOpened, schedulePulse]);
-
-  const handleOpen = useCallback(() => {
-    setHasOpened(true);
-    setIsPulsing(false);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    onOpen();
-  }, [onOpen]);
+    function triggerPulse() {
+      setIsPulsing(true)
+      timerRef.current = setTimeout(() => {
+        setIsPulsing(false)
+        timerRef.current = setTimeout(triggerPulse, randomInterval())
+      }, 2000)
+    }
+    timerRef.current = setTimeout(triggerPulse, 5000)
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [])
 
   return (
-    <button
-      onClick={handleOpen}
-      type="button"
-      aria-label={`Open chat with ${agentName}`}
-      className="weggy-outer-pill"
+    <div
+      className={`collapsed-bar-wrapper${isPulsing ? ' collapsed-bar-wrapper--pulsing' : ''}`}
+      onClick={onExpand}
+      role="button"
+      tabIndex={0}
+      aria-label="Open chat with Weggy"
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onExpand() }}
     >
-      {/* Inner pill — collapses + fades during pulse */}
-      <div className={`weggy-inner-pill${isPulsing ? ' is-pulsing' : ''}`}>
-        <div className="weggy-bar-text">
-          <div className="weggy-bar-name">{agentName}</div>
-          <div className="weggy-bar-sub">Chat with us — usually replies instantly</div>
-        </div>
-        <div className="weggy-bar-cta-btn">Chat now</div>
+      <div className="collapsed-bar-pill">
+        <span className="collapsed-bar-text">{greetingText}</span>
+        <span className="collapsed-bar-cta">START</span>
       </div>
-
-      {/* Avatar — always visible, on the RIGHT side */}
-      <div className="weggy-bar-avatar">
+      <div className="collapsed-bar-avatar">
         <img
-          src={avatarPath}
-          alt={agentName}
-          width={44}
-          height={44}
-          style={{ objectFit: 'cover', width: 44, height: 44 }}
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).style.display = 'none';
-          }}
+          src={avatarUrl || '/weggy-avatar.svg'}
+          alt="Weggy"
+          className="collapsed-bar-avatar-img"
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
         />
       </div>
-    </button>
-  );
+    </div>
+  )
+}
+
+// Self-injected styles — matches PRD spec exactly
+const STYLES = `
+.collapsed-bar-wrapper {
+  display: flex; align-items: center; justify-content: flex-end;
+  width: 100%; max-width: 460px; padding: 4px 8px; overflow: hidden;
+  background: rgba(180, 180, 180, 0.35);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 9999px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08); cursor: pointer;
+  transition:
+    max-width 0.5s cubic-bezier(0.4,0,0.2,1),
+    padding-left 0.5s cubic-bezier(0.4,0,0.2,1),
+    padding-right 0.5s cubic-bezier(0.4,0,0.2,1),
+    transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.collapsed-bar-wrapper:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+.collapsed-bar-wrapper:active { transform: translateY(0); }
+
+.collapsed-bar-pill {
+  display: flex; align-items: center; flex: 1; min-width: 0; max-width: 460px;
+  overflow: hidden; padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  margin-left: 2px; margin-right: 6px; white-space: nowrap; opacity: 1;
+  transition:
+    max-width 0.45s cubic-bezier(0.4,0,0.2,1),
+    opacity 0.3s ease,
+    margin-right 0.45s cubic-bezier(0.4,0,0.2,1),
+    margin-left 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+
+.collapsed-bar-text {
+  flex: 1; font-size: 11px; color: rgba(0,0,0,0.75); font-weight: 400;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-right: 8px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.collapsed-bar-cta {
+  display: flex; align-items: center; justify-content: center;
+  padding: 5px 14px;
+  background: #E8713A;
+  color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  border-radius: 9999px; white-space: nowrap; flex-shrink: 0;
+  transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+.collapsed-bar-wrapper:hover .collapsed-bar-cta { background: #D4622A; }
+
+.collapsed-bar-avatar {
+  width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
+  flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.collapsed-bar-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Pulse — pill collapses, only avatar shows */
+.collapsed-bar-wrapper--pulsing {
+  max-width: 52px; padding-left: 4px; padding-right: 4px; pointer-events: none;
+}
+.collapsed-bar-wrapper--pulsing .collapsed-bar-pill {
+  max-width: 0; opacity: 0; margin-right: 0; margin-left: 0;
+}
+
+@media (max-width: 480px) {
+  .collapsed-bar-wrapper { padding: 4px; }
+  .collapsed-bar-pill { padding: 6px 12px; margin-right: 4px; }
+  .collapsed-bar-text { font-size: 12px; }
+  .collapsed-bar-cta { padding: 6px 14px; font-size: 12px; }
+  .collapsed-bar-avatar { width: 42px; height: 42px; }
+}
+@media (max-width: 360px) { .collapsed-bar-text { display: none; } }
+`
+if (typeof document !== 'undefined') {
+  const id = 'weggy-collapsed-bar-styles'
+  if (!document.getElementById(id)) {
+    const el = document.createElement('style')
+    el.id = id
+    el.textContent = STYLES
+    document.head.appendChild(el)
+  }
 }

@@ -1,48 +1,52 @@
-import { PhoneIcon } from './Icons';
-
 interface CallbackCTAProps {
   onRequestCall: () => void;
-  accentColor: string;
 }
 
 export function CallbackCTA({ onRequestCall }: CallbackCTAProps) {
   return (
-    <div className="px-4 pt-1 pb-2 shrink-0">
-      <div
-        className="flex items-center gap-2 mb-2"
-        style={{ opacity: 0.45 }}
-      >
-        <div className="flex-1 h-px" style={{ background: 'rgba(0,0,0,0.15)' }} />
-        <span style={{ fontSize: 10.5, color: 'rgba(0,0,0,0.50)', whiteSpace: 'nowrap' }}>
-          Need immediate help?
-        </span>
-        <div className="flex-1 h-px" style={{ background: 'rgba(0,0,0,0.15)' }} />
+    <div className="callback-cta">
+      <div className="callback-cta-row">
+        <span className="callback-cta-text">I'm available for a quick call now</span>
+        <button className="callback-cta-btn" onClick={onRequestCall} type="button">
+          Yes Please!
+        </button>
       </div>
-
-      <button
-        onClick={onRequestCall}
-        type="button"
-        className="w-full flex items-center justify-center gap-2 rounded-full text-white font-semibold transition-all"
-        style={{
-          background: '#E8713A',
-          padding: '10px 0',
-          fontSize: '0.8125rem',
-          boxShadow: '0 4px 16px rgba(232,113,58,0.35)',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = '#D4622A';
-          (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = '#E8713A';
-          (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
-        }}
-      >
-        <PhoneIcon size={14} />
-        Call Me Now
-      </button>
     </div>
   );
+}
+
+// Self-injected styles — PRD spec exactly
+const STYLES = `
+.callback-cta { display: flex; flex-direction: column; padding: 0 0 0.5rem; background: transparent; }
+.callback-cta::before {
+  content: ''; height: 1px; background: rgba(255,255,255,0.7); margin: 0 1rem 0.375rem;
+}
+.callback-cta-row {
+  display: flex; align-items: center; justify-content: space-between; margin: 0 1rem; padding: 0;
+}
+.callback-cta-text {
+  font-size: 0.6875rem; color: rgba(0,0,0,0.95); font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.callback-cta-btn {
+  padding: 0.25rem 1.25rem; background: #E8713A;
+  color: white; font-size: 0.625rem; font-weight: 600;
+  border: none; border-radius: 9999px; cursor: pointer;
+  transition: all 150ms ease; white-space: nowrap; flex-shrink: 0;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.35); text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.callback-cta-btn:hover { background: #D4622A; transform: scale(1.02); }
+.callback-cta-btn:active { transform: scale(0.98); }
+
+@media (max-width: 480px) {
+  .callback-cta-row { margin: 0 1rem; padding: 0.5rem 0; }
+  .callback-cta-text { font-size: 1rem; }
+  .callback-cta-btn { padding: 0.625rem 1.25rem; font-size: 0.875rem; }
+}
+`
+if (typeof document !== 'undefined') {
+  const id = 'weggy-callback-cta-styles'
+  if (!document.getElementById(id)) {
+    const el = document.createElement('style'); el.id = id; el.textContent = STYLES; document.head.appendChild(el)
+  }
 }

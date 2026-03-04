@@ -1,95 +1,84 @@
 import { XIcon } from './Icons';
 
 interface ChatHeaderProps {
-  agentName: string;
-  companyName: string;
-  avatarPath: string;
   onClose?: () => void;
+  avatarUrl?: string;
 }
 
-export function ChatHeader({ agentName, companyName, avatarPath, onClose }: ChatHeaderProps) {
+export function ChatHeader({ onClose, avatarUrl }: ChatHeaderProps) {
   return (
-    <div
-      className="flex items-center gap-3 px-4 py-3 shrink-0"
-      style={{
-        background: 'rgba(255, 255, 255, 0.15)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.20)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-      }}
-    >
-      {/* Avatar */}
-      <div
-        className="shrink-0 rounded-full overflow-hidden flex items-center justify-center"
-        style={{
-          width: 36,
-          height: 36,
-          boxShadow: '0 3px 10px rgba(0,0,0,0.18)',
-          background: '#1a1a1a',
-        }}
-      >
+    <header className="chat-header">
+      <div className="chat-header-avatar">
         <img
-          src={avatarPath}
-          alt={agentName}
-          width={36}
-          height={36}
-          style={{ objectFit: 'cover', width: 36, height: 36 }}
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.style.display = 'none';
-            const fallback = target.nextSibling as HTMLElement | null;
-            if (fallback) fallback.style.display = 'flex';
-          }}
+          src={avatarUrl || '/weggy-avatar.svg'}
+          alt="Weggy"
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
         />
-        <div
-          className="hidden items-center justify-center w-full h-full font-bold text-sm"
-          style={{ color: '#E8713A' }}
-          aria-hidden="true"
-        >
-          {agentName.charAt(0)}
-        </div>
       </div>
-
-      {/* Agent info */}
-      <div className="flex-1 min-w-0">
-        <div
-          className="font-semibold leading-tight truncate"
-          style={{ fontSize: '0.9375rem', color: '#1a1a1a', textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
-        >
-          {agentName}
-        </div>
-        <div
-          className="leading-tight truncate"
-          style={{ fontSize: '0.75rem', color: 'rgba(0,0,0,0.55)' }}
-        >
-          {companyName}
-        </div>
+      <div className="chat-header-title">
+        <h1>Ask Weggy</h1>
+        <p>Your Kooler Garage Doors Assistant</p>
       </div>
-
-      {/* Online indicator */}
-      <div className="flex items-center gap-1.5 shrink-0 mr-1">
-        <span
-          className="inline-block rounded-full"
-          style={{ width: 8, height: 8, background: '#22c55e' }}
-          aria-hidden="true"
-        />
-        <span style={{ color: 'rgba(0,0,0,0.50)', fontSize: '0.75rem' }}>Online</span>
-      </div>
-
-      {/* Close button */}
       {onClose && (
         <button
           onClick={onClose}
-          className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors"
-          style={{ color: 'rgba(0,0,0,0.45)', background: 'transparent' }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,0,0,0.08)'; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}
+          className="chat-header-close"
           aria-label="Close chat"
           type="button"
         >
-          <XIcon size={14} />
+          <XIcon size={16} />
         </button>
       )}
-    </div>
+    </header>
   );
+}
+
+// Self-injected styles — PRD spec exactly
+const STYLES = `
+.chat-header {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1rem 1rem 0.5rem; position: relative; background: transparent;
+}
+.chat-header-avatar {
+  width: 34px; height: 34px; border-radius: 50%; overflow: hidden;
+  margin-top: 0.5rem; margin-bottom: 0.5rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+.chat-header-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.chat-header-title { text-align: center; }
+.chat-header-title h1 {
+  font-size: 0.9375rem; font-weight: 600; color: #000;
+  margin: 0 0 0.125rem; line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.chat-header-title p {
+  font-size: 0.9375rem; font-weight: 400; color: rgba(0,0,0,0.8);
+  margin: 0; line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.chat-header-close {
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; border-radius: 50%;
+  cursor: pointer; color: rgba(0,0,0,0.5);
+  transition: all 150ms ease;
+}
+.chat-header-close:hover { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.8); }
+.chat-header-close svg { width: 16px; height: 16px; }
+
+@media (max-width: 480px) {
+  .chat-header { padding: 1.25rem 1.25rem 0.75rem; }
+  .chat-header-avatar { width: 72px; height: 72px; margin-bottom: 0.75rem; }
+  .chat-header-title h1 { font-size: 1.5rem; }
+  .chat-header-title p { font-size: 1.125rem; }
+  .chat-header-close { width: 36px; height: 36px; top: 1rem; right: 1rem; }
+  .chat-header-close svg { width: 24px; height: 24px; }
+}
+`
+if (typeof document !== 'undefined') {
+  const id = 'weggy-chat-header-styles'
+  if (!document.getElementById(id)) {
+    const el = document.createElement('style'); el.id = id; el.textContent = STYLES; document.head.appendChild(el)
+  }
 }
