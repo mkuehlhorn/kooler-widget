@@ -51,7 +51,16 @@ export function CollapsedBar({ agentName, avatarPath, onOpen }: CollapsedBarProp
       aria-label={`Open chat with ${agentName}`}
       className="weggy-outer-pill"
     >
-      {/* Avatar — always visible, outside the inner pill */}
+      {/* Inner pill — collapses + fades during pulse */}
+      <div className={`weggy-inner-pill${isPulsing ? ' is-pulsing' : ''}`}>
+        <div className="weggy-bar-text">
+          <div className="weggy-bar-name">{agentName}</div>
+          <div className="weggy-bar-sub">Chat with us — usually replies instantly</div>
+        </div>
+        <div className="weggy-bar-cta-btn">Chat now</div>
+      </div>
+
+      {/* Avatar — always visible, on the RIGHT side */}
       <div className="weggy-bar-avatar">
         <img
           src={avatarPath}
@@ -63,15 +72,6 @@ export function CollapsedBar({ agentName, avatarPath, onOpen }: CollapsedBarProp
             (e.currentTarget as HTMLImageElement).style.display = 'none';
           }}
         />
-      </div>
-
-      {/* Inner pill — collapses + fades during pulse */}
-      <div className={`weggy-inner-pill${isPulsing ? ' is-pulsing' : ''}`}>
-        <div className="weggy-bar-text">
-          <div className="weggy-bar-name">{agentName}</div>
-          <div className="weggy-bar-sub">Chat with us — usually replies instantly</div>
-        </div>
-        <div className="weggy-bar-cta-btn">Chat now</div>
       </div>
     </button>
   );

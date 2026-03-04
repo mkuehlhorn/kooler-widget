@@ -109,7 +109,7 @@
     Object.assign(el.style, {
       position: isInline ? 'relative' : 'fixed',
       bottom: isInline ? 'auto' : '0',
-      right: isInline ? 'auto' : isRight ? '0' : 'auto',
+      right: isInline ? 'auto' : isRight ? '16px' : 'auto',
       left: isInline ? 'auto' : isRight ? 'auto' : '0',
       width: isInline ? '100%' : '420px',
       height: isInline ? '600px' : '700px',
