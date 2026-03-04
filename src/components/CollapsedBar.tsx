@@ -110,12 +110,12 @@ const STYLES = `
 }
 .collapsed-bar-avatar-img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Pulse — pill collapses, only avatar shows */
+/* Pulse — pill collapses, only avatar shows (avatar remains clickable) */
 .collapsed-bar-wrapper--pulsing {
-  max-width: 52px; padding-left: 4px; padding-right: 4px; pointer-events: none;
+  max-width: 52px; padding-left: 4px; padding-right: 4px;
 }
 .collapsed-bar-wrapper--pulsing .collapsed-bar-pill {
-  max-width: 0; opacity: 0; margin-right: 0; margin-left: 0;
+  max-width: 0; opacity: 0; margin-right: 0; margin-left: 0; pointer-events: none;
 }
 
 @media (max-width: 480px) {

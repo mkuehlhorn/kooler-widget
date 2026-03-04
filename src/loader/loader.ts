@@ -64,12 +64,12 @@
   const useMock = attr('mock', 'false') === 'true';
 
   // ─── Dimensions (PRD spec) ────────────────────────────────────────────────────
-  // Collapsed: 460×64  Expanded: 720×540  Margin: 20px
+  // Collapsed: 460×64  Expanded: 720×490  Margin: 20px
 
   const COLLAPSED_W = 460;
   const COLLAPSED_H = 64;
   const EXPANDED_W  = 720;
-  const EXPANDED_H  = 540;
+  const EXPANDED_H  = 490;
   const MARGIN      = 20;
 
   function isMobile(): boolean {

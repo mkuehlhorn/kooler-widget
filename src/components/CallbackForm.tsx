@@ -186,10 +186,10 @@ const STYLES = `
   text-transform: uppercase; letter-spacing: 0.04em; padding-left: 0.5rem;
 }
 .cb-form-field input, .cb-form-field select {
-  padding: 0.175rem 0.65rem; font-size: 0.6875rem; color: rgba(0,0,0,0.85);
+  height: 28px; padding: 0 0.65rem; font-size: 0.6875rem; color: rgba(0,0,0,0.85);
   background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9);
   border-radius: 9999px; outline: none; transition: all 0.15s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05); font-family: inherit;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); font-family: inherit; box-sizing: border-box;
 }
 .cb-form-field input:focus, .cb-form-field select:focus {
   background: rgba(255,255,255,0.9); border-color: #E8713A;

@@ -247,10 +247,16 @@ export async function submitCallback(
     ...getAuthHeaders(),
   };
 
+  // Include sessionId so backend can link callback to chat session + ST customer
+  const body = {
+    ...data,
+    ...(_sessionCredentials ? { sessionId: _sessionCredentials.sessionId } : {}),
+  };
+
   const response = await fetch(apiUrl('/api/callback'), {
     method: 'POST',
     headers,
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {

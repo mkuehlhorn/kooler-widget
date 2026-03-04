@@ -3,18 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kooler Garage Doors — Weggy Widget Demo</title>
+    <title>Kooler Garage Doors — Grand Junction, CO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      :root {
+        --brown:  #312621;
+        --orange: #FF671F;
+        --gold:   #D9C89E;
+        --dark:   #1a1410;
+        --text:   #3F4444;
+        --muted:  #747E81;
       }
 
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Helvetica, Arial, sans-serif;
-        background: linear-gradient(160deg, #E8713A 0%, #C85520 100%);
+        font-family: 'Montserrat', sans-serif;
+        background: var(--dark);
+        color: white;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -22,264 +33,692 @@
 
       /* ── Nav ── */
       nav {
-        background: #1B2F5B;
-        color: white;
-        padding: 16px 32px;
+        background: var(--brown);
+        padding: 0 40px;
         display: flex;
         align-items: center;
-        gap: 16px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        justify-content: space-between;
+        height: 70px;
+        border-bottom: 2px solid var(--orange);
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
 
-      nav .logo {
-        font-size: 20px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
+      .nav-logo {
+        font-family: 'Oswald', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: white;
       }
 
-      nav .logo span {
-        color: #F97316;
+      .nav-logo span { color: var(--orange); }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
       }
 
-      nav .tagline {
+      .nav-links a {
+        font-family: 'Montserrat', sans-serif;
         font-size: 13px;
-        opacity: 0.65;
-        margin-left: 4px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.75);
+        text-decoration: none;
+        transition: color 0.15s;
       }
+
+      .nav-links a:hover { color: var(--orange); }
+
+      .nav-cta {
+        background: var(--orange);
+        color: white !important;
+        padding: 9px 22px;
+        border-radius: 4px;
+        font-weight: 700 !important;
+      }
+
+      .nav-cta:hover { filter: brightness(1.1); color: white !important; }
 
       /* ── Hero ── */
       .hero {
-        background: linear-gradient(135deg, #1B2F5B 0%, #243f7a 60%, #1a4070 100%);
-        color: white;
-        padding: 80px 32px 60px;
-        text-align: center;
+        position: relative;
+        min-height: 580px;
+        display: flex;
+        align-items: center;
+        padding: 80px 40px;
+        overflow: hidden;
+        background:
+          linear-gradient(
+            110deg,
+            rgba(49,38,33,0.97) 0%,
+            rgba(49,38,33,0.85) 45%,
+            rgba(26,20,16,0.6) 100%
+          ),
+          /* Dark textured garage background approximation */
+          repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.015) 0px,
+            rgba(255,255,255,0.015) 1px,
+            transparent 1px,
+            transparent 40px
+          ),
+          linear-gradient(160deg, #2a1e18 0%, #1a1410 50%, #0d0b09 100%);
+      }
+
+      /* Decorative orange accent line */
+      .hero::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 5px;
+        background: var(--orange);
+      }
+
+      .hero-content {
+        max-width: 640px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-eyebrow {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin-bottom: 16px;
       }
 
       .hero h1 {
-        font-size: clamp(28px, 5vw, 48px);
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 16px;
-        line-height: 1.15;
+        font-family: 'Oswald', sans-serif;
+        font-size: clamp(36px, 5.5vw, 62px);
+        font-weight: 600;
+        line-height: 1.08;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 20px;
       }
 
-      .hero h1 span {
-        color: #F97316;
-      }
+      .hero h1 span { color: var(--orange); }
 
       .hero p {
-        font-size: 18px;
-        opacity: 0.8;
-        max-width: 540px;
-        margin: 0 auto 32px;
-        line-height: 1.6;
+        font-size: 16px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.75);
+        max-width: 500px;
+        margin-bottom: 36px;
       }
 
-      .hero .badges {
+      .hero-buttons {
         display: flex;
-        gap: 12px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        background: var(--orange);
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: filter 0.15s;
+        box-shadow: 0 4px 20px rgba(255,103,31,0.35);
+      }
+
+      .btn-primary:hover { filter: brightness(1.1); }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--gold);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 13px 28px;
+        border: 1.5px solid var(--gold);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .btn-outline:hover {
+        background: var(--gold);
+        color: var(--brown);
+      }
+
+      /* Hero stats bar */
+      .stats-bar {
+        background: var(--brown);
+        border-top: 1px solid rgba(217,200,158,0.2);
+        border-bottom: 1px solid rgba(217,200,158,0.2);
+        padding: 20px 40px;
+        display: flex;
+        gap: 0;
         justify-content: center;
         flex-wrap: wrap;
       }
 
-      .hero .badge {
-        background: rgba(255,255,255,0.12);
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 999px;
-        padding: 6px 16px;
-        font-size: 13px;
-        font-weight: 500;
+      .stat {
+        text-align: center;
+        padding: 8px 48px;
+        border-right: 1px solid rgba(217,200,158,0.2);
       }
 
-      /* ── Services grid ── */
+      .stat:last-child { border-right: none; }
+
+      .stat-number {
+        font-family: 'Oswald', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--orange);
+        display: block;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.5);
+      }
+
+      /* ── Services ── */
       .services {
-        padding: 60px 32px;
-        max-width: 1100px;
+        padding: 80px 40px;
+        max-width: 1200px;
         margin: 0 auto;
         width: 100%;
       }
 
-      .services h2 {
-        font-size: 28px;
+      .section-label {
+        font-size: 11px;
         font-weight: 700;
-        color: #fff;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: clamp(26px, 3.5vw, 40px);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: white;
         margin-bottom: 8px;
       }
 
-      .services .subtitle {
-        color: rgba(255,255,255,0.75);
+      .section-sub {
         font-size: 15px;
-        margin-bottom: 32px;
+        color: rgba(255,255,255,0.55);
+        margin-bottom: 48px;
+        max-width: 520px;
       }
 
       .services-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 2px;
       }
 
       .service-card {
-        background: white;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-        border: 1px solid rgba(0,0,0,0.04);
+        background: #1e1714;
+        padding: 32px 28px;
+        border: 1px solid rgba(217,200,158,0.08);
+        transition: border-color 0.2s, background 0.2s;
+        cursor: default;
       }
 
-      .service-card .icon {
-        font-size: 32px;
-        margin-bottom: 12px;
+      .service-card:hover {
+        border-color: var(--orange);
+        background: #251d19;
+      }
+
+      .service-icon {
+        width: 42px;
+        height: 42px;
+        background: rgba(255,103,31,0.12);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-bottom: 16px;
+        border: 1px solid rgba(255,103,31,0.2);
       }
 
       .service-card h3 {
-        font-size: 16px;
-        font-weight: 700;
-        color: #1B2F5B;
-        margin-bottom: 8px;
+        font-family: 'Oswald', sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 10px;
       }
 
       .service-card p {
-        font-size: 14px;
-        color: #64748b;
+        font-size: 13.5px;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.6;
+      }
+
+      /* ── Why Kooler ── */
+      .why-section {
+        background: var(--brown);
+        padding: 80px 40px;
+      }
+
+      .why-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .why-list {
+        list-style: none;
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .why-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .why-check {
+        width: 24px;
+        height: 24px;
+        background: var(--orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .why-item-text h4 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 4px;
+      }
+
+      .why-item-text p {
+        font-size: 13px;
+        color: rgba(255,255,255,0.55);
         line-height: 1.5;
       }
 
-      /* ── CTA section ── */
-      .cta-section {
-        background: #1B2F5B;
-        color: white;
-        padding: 60px 32px;
+      /* Weggy promo box */
+      .weggy-promo {
+        background: #1e1714;
+        border: 1px solid rgba(217,200,158,0.15);
+        border-radius: 12px;
+        padding: 40px 36px;
         text-align: center;
       }
 
-      .cta-section h2 {
-        font-size: 32px;
-        font-weight: 800;
-        margin-bottom: 12px;
+      .weggy-avatar-wrap {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--orange), #c84a10);
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        box-shadow: 0 0 0 6px rgba(255,103,31,0.12);
       }
 
-      .cta-section h2 span {
-        color: #F97316;
+      .weggy-promo h3 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 10px;
       }
 
-      .cta-section p {
-        font-size: 16px;
-        opacity: 0.8;
+      .weggy-promo p {
+        font-size: 14px;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.6;
         margin-bottom: 28px;
       }
 
-      .cta-btn {
-        display: inline-block;
-        background: #F97316;
-        color: white;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 14px 36px;
-        border-radius: 999px;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 20px rgba(249,115,22,0.4);
-        transition: filter 0.15s ease;
+      .weggy-features {
+        list-style: none;
+        text-align: left;
+        margin-bottom: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
 
-      .cta-btn:hover {
-        filter: brightness(1.08);
+      .weggy-features li {
+        font-size: 13px;
+        color: rgba(255,255,255,0.65);
+        display: flex;
+        gap: 10px;
+        align-items: center;
       }
+
+      .weggy-features li::before {
+        content: '✓';
+        color: var(--orange);
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      /* ── CTA Banner ── */
+      .cta-banner {
+        background: linear-gradient(100deg, var(--orange) 0%, #c84a10 100%);
+        padding: 64px 40px;
+        text-align: center;
+      }
+
+      .cta-banner h2 {
+        font-family: 'Oswald', sans-serif;
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: white;
+        margin-bottom: 12px;
+      }
+
+      .cta-banner p {
+        font-size: 16px;
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 32px;
+      }
+
+      .cta-banner .btn-white {
+        background: white;
+        color: var(--orange);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 14px 36px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: filter 0.15s;
+      }
+
+      .cta-banner .btn-white:hover { filter: brightness(0.95); }
 
       /* ── Footer ── */
       footer {
-        background: #0f1f3d;
-        color: rgba(255,255,255,0.5);
-        padding: 24px 32px;
-        text-align: center;
-        font-size: 13px;
-        margin-top: auto;
+        background: #0d0b09;
+        border-top: 1px solid rgba(217,200,158,0.1);
+        padding: 32px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
       }
 
-      footer a {
-        color: rgba(255,255,255,0.7);
+      .footer-brand {
+        font-family: 'Oswald', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: white;
+      }
+
+      .footer-brand span { color: var(--orange); }
+
+      .footer-links {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+      }
+
+      .footer-links a {
+        font-size: 12px;
+        color: rgba(255,255,255,0.4);
         text-decoration: none;
+        letter-spacing: 0.04em;
+        transition: color 0.15s;
+      }
+
+      .footer-links a:hover { color: var(--orange); }
+
+      .footer-copy {
+        font-size: 12px;
+        color: rgba(255,255,255,0.3);
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav { padding: 0 20px; }
+        .nav-links { display: none; }
+        .hero, .services, .why-section, .cta-banner { padding-left: 20px; padding-right: 20px; }
+        .stats-bar { padding: 16px 20px; }
+        .stat { padding: 8px 20px; }
+        .why-inner { grid-template-columns: 1fr; gap: 48px; }
+        footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
       }
     </style>
   </head>
   <body>
+
     <!-- Nav -->
     <nav>
-      <div class="logo">Kooler<span>.</span></div>
-      <div class="tagline">Garage Doors — Grand Junction, CO</div>
+      <div class="nav-logo">Kooler <span>Garage Doors</span></div>
+      <ul class="nav-links">
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#" class="nav-cta" onclick="window.WeggyWidget && window.WeggyWidget.open(); return false;">Chat with Weggy</a></li>
+      </ul>
     </nav>
 
     <!-- Hero -->
     <section class="hero">
-      <h1>Expert Garage Door<br /><span>Service & Repair</span></h1>
-      <p>
-        Serving Grand Junction and surrounding communities.
-        Chat with Weggy, our AI assistant, to schedule service or get answers instantly.
-      </p>
-      <div class="badges">
-        <div class="badge">⚡ Same-Day Service</div>
-        <div class="badge">🛡️ Licensed & Insured</div>
-        <div class="badge">📞 Emergency Available</div>
-        <div class="badge">⭐ 5-Star Rated</div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">Grand Junction's Garage Door Experts</div>
+        <h1>Garage Door<br />Repair &amp; <span>Installation</span></h1>
+        <p>
+          Same-day service across Grand Junction, Fruita, and the Western Slope.
+          Licensed technicians, upfront pricing, and work guaranteed.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="window.WeggyWidget && window.WeggyWidget.open()">
+            Chat with Weggy — Get a Quote
+          </button>
+          <button class="btn-outline">Call (970) 555-0100</button>
+        </div>
       </div>
     </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-number">15+</span>
+        <span class="stat-label">Years in Business</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5,000+</span>
+        <span class="stat-label">Doors Serviced</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">4.9★</span>
+        <span class="stat-label">Google Rating</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">Same Day</span>
+        <span class="stat-label">Service Available</span>
+      </div>
+    </div>
 
     <!-- Services -->
     <section class="services">
-      <h2>Our Services</h2>
-      <p class="subtitle">
-        From emergency repairs to new door installations — Kooler does it all.
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-sub">
+        From a broken spring to a full new door — Kooler handles it all with professional care.
       </p>
       <div class="services-grid">
         <div class="service-card">
-          <div class="icon">🔧</div>
+          <div class="service-icon">🔧</div>
           <h3>Garage Door Repair</h3>
-          <p>Springs, cables, rollers, panels — we fix all makes and models the same day.</p>
+          <p>Springs, cables, rollers, tracks, and panels. We fix all makes and models — often the same day.</p>
         </div>
         <div class="service-card">
-          <div class="icon">🚪</div>
+          <div class="service-icon">🚪</div>
           <h3>New Door Installation</h3>
-          <p>Full selection of steel, wood, composite, and glass doors with professional installation.</p>
+          <p>Steel, wood, composite, and glass doors. Full selection with professional installation included.</p>
         </div>
         <div class="service-card">
-          <div class="icon">⚙️</div>
+          <div class="service-icon">⚙️</div>
           <h3>Opener Service</h3>
-          <p>LiftMaster, Chamberlain, Genie and more. Installation, repair, and smart home setup.</p>
+          <p>LiftMaster, Chamberlain, Genie and more. Installation, repair, and smart home integration.</p>
         </div>
         <div class="service-card">
-          <div class="icon">🔩</div>
+          <div class="service-icon">🔩</div>
           <h3>Spring Replacement</h3>
-          <p>Torsion and extension springs replaced safely by trained technicians.</p>
+          <p>Torsion and extension springs replaced safely by trained technicians. Don't DIY this one.</p>
         </div>
         <div class="service-card">
-          <div class="icon">🔍</div>
-          <h3>Safety Inspection</h3>
-          <p>Comprehensive 20-point inspection. Identify problems before they become emergencies.</p>
+          <div class="service-icon">🏢</div>
+          <h3>Commercial Service</h3>
+          <p>Roll-up doors, high-cycle springs, and commercial opener systems for business properties.</p>
         </div>
         <div class="service-card">
-          <div class="icon">🆘</div>
+          <div class="service-icon">🆘</div>
           <h3>Emergency Service</h3>
-          <p>Stuck door? Can't get in or out? We respond fast to emergency calls.</p>
+          <p>Stuck door? Broken spring at 8pm? We respond fast. Emergency calls answered 7 days a week.</p>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta-section">
-      <h2>Need Service <span>Today?</span></h2>
-      <p>Chat with Weggy right now — schedule in under 2 minutes.</p>
-      <button class="cta-btn" onclick="window.WeggyWidget && window.WeggyWidget.open()">
-        Chat with Weggy
+    <!-- Why Kooler + Weggy Promo -->
+    <section class="why-section">
+      <div class="why-inner">
+        <div>
+          <div class="section-label">Why Choose Us</div>
+          <h2 class="section-title">The Kooler Difference</h2>
+          <ul class="why-list">
+            <li class="why-item">
+              <div class="why-check">✓</div>
+              <div class="why-item-text">
+                <h4>Upfront Pricing</h4>
+                <p>We quote before we start. No surprise charges when the job is done.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">✓</div>
+              <div class="why-item-text">
+                <h4>Licensed &amp; Insured</h4>
+                <p>Full insurance coverage and licensed technicians on every job.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">✓</div>
+              <div class="why-item-text">
+                <h4>Work Guaranteed</h4>
+                <p>We stand behind our work. If something's wrong, we'll fix it free.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">✓</div>
+              <div class="why-item-text">
+                <h4>Local Since 2009</h4>
+                <p>Locally owned and operated in Grand Junction for 15+ years.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Weggy Promo -->
+        <div class="weggy-promo">
+          <div class="weggy-avatar-wrap">🤖</div>
+          <h3>Meet Weggy</h3>
+          <p>
+            Weggy is Kooler's AI assistant. Get an instant quote, check availability,
+            and book your appointment — 24/7, no hold music.
+          </p>
+          <ul class="weggy-features">
+            <li>Get a service estimate in seconds</li>
+            <li>Check same-day availability</li>
+            <li>Book an appointment instantly</li>
+            <li>Ask any garage door question</li>
+          </ul>
+          <button class="btn-primary" style="width:100%;" onclick="window.WeggyWidget && window.WeggyWidget.open()">
+            Chat with Weggy Now
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <h2>Need Service Today?</h2>
+      <p>Chat with Weggy — schedule your appointment in under 2 minutes.</p>
+      <button class="btn-white" onclick="window.WeggyWidget && window.WeggyWidget.open()">
+        Get Started — It's Free
       </button>
     </section>
 
     <!-- Footer -->
     <footer>
-      &copy; 2026 Kooler Garage Doors — Grand Junction, CO &nbsp;|&nbsp;
-      <a href="https://koolergaragedoors.com/privacy">Privacy Policy</a>
+      <div class="footer-brand">Kooler <span>Garage Doors</span></div>
+      <ul class="footer-links">
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="https://koolergaragedoors.com" target="_blank">Main Site</a></li>
+      </ul>
+      <div class="footer-copy">
+        &copy; 2026 Kooler Garage Doors — Grand Junction, CO &nbsp;·&nbsp; Powered by Weggy AI
+      </div>
     </footer>
 
-    <!-- Weggy Widget — mock mode for demo -->
+    <!-- Weggy Widget -->
     <script
       src="/loader.js"
       data-widget-host=""
@@ -287,8 +726,8 @@
       data-position="bottom-right"
       data-market="us"
       data-language="en"
-      data-primary-color="#1B2F5B"
-      data-accent-color="#F97316"
+      data-primary-color="#312621"
+      data-accent-color="#FF671F"
       data-mock="true"
     ></script>
   </body>

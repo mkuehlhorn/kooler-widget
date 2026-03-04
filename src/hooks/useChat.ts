@@ -76,6 +76,7 @@ interface UseChatResult {
   error: string | null;
   session: ChatSession | null;
   sendMessage: (content: string) => Promise<void>;
+  initSession: () => Promise<ChatSession | null>;
   clearError: () => void;
 }
 
@@ -90,6 +91,23 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
   const sessionRef = useRef<ChatSession | null>(null);
   sessionRef.current = session;
 
+  // Stream greeting text word-by-word (typewriter effect)
+  const streamGreeting = useCallback(async (text: string, messageId: string) => {
+    const words = text.split(' ');
+    let accumulated = '';
+    await new Promise<void>((resolve) => setTimeout(resolve, 250));
+    for (const word of words) {
+      await new Promise<void>((resolve) => setTimeout(resolve, 48));
+      accumulated += (accumulated ? ' ' : '') + word;
+      setMessages((prev) =>
+        prev.map((m) => m.id === messageId ? { ...m, content: accumulated, status: 'streaming' } : m)
+      );
+    }
+    setMessages((prev) =>
+      prev.map((m) => m.id === messageId ? { ...m, status: 'sent' } : m)
+    );
+  }, []);
+
   const initSession = useCallback(async (): Promise<ChatSession | null> => {
     if (sessionRef.current) return sessionRef.current;
 
@@ -99,6 +117,10 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
       setSessionCredentials(stored.sessionId, stored.token);
       setSession(stored);
       sessionRef.current = stored;
+      // Messages aren't persisted — stream greeting fresh on every open
+      const greetingId = generateId();
+      setMessages([{ id: greetingId, role: 'assistant', content: '', status: 'streaming', timestamp: Date.now() }]);
+      streamGreeting(config.greeting, greetingId);
       return stored;
     }
 
@@ -123,16 +145,11 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
       setSession(newSession);
       sessionRef.current = newSession;
 
-      // Add greeting message
+      // Stream greeting with typewriter animation
       const greetingText = data.greeting ?? config.greeting;
-      const greetingMessage: ChatMessage = {
-        id: generateId(),
-        role: 'assistant',
-        content: greetingText,
-        status: 'sent',
-        timestamp: Date.now(),
-      };
-      setMessages([greetingMessage]);
+      const greetingId = generateId();
+      setMessages([{ id: greetingId, role: 'assistant', content: '', status: 'streaming', timestamp: Date.now() }]);
+      streamGreeting(greetingText, greetingId);
 
       return newSession;
     } catch (err) {
@@ -143,7 +160,7 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
     } finally {
       setIsInitializing(false);
     }
-  }, [config.market, config.language, config.greeting]);
+  }, [config.market, config.language, config.greeting, streamGreeting]);
 
   const sendMessage = useCallback(
     async (content: string): Promise<void> => {
@@ -258,6 +275,7 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
     error,
     session,
     sendMessage,
+    initSession,
     clearError,
   };
 }

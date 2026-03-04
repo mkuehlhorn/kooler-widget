@@ -34,7 +34,7 @@ export const ChatInput = forwardRef(function ChatInput(
   // Auto-resize textarea
   useEffect(() => {
     const ta = textareaRef.current;
-    if (ta) { ta.style.height = 'auto'; ta.style.height = `${Math.min(ta.scrollHeight, 100)}px`; }
+    if (ta) { ta.style.height = '0px'; ta.style.height = `${Math.min(ta.scrollHeight, 80)}px`; }
   }, [value]);
 
   function handleSubmit(e: FormEvent) {
@@ -73,18 +73,19 @@ export const ChatInput = forwardRef(function ChatInput(
 
 // Self-injected styles — PRD spec exactly
 const STYLES = `
-/* Pill input bar — height 36px */
+/* Pill input — fixed height, flex centers textarea vertically */
 .chat-input-form {
   display: flex; align-items: center;
   background: rgba(255,255,255,0.95); border-radius: 9999px;
-  margin: 0 1rem 0.75rem; padding: 0.1875rem; padding-left: 1rem;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: none; height: 36px;
+  margin: 0 1rem 0.75rem; height: 36px; padding: 0 4px 0 1rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: none;
 }
 .chat-input-textarea {
-  flex: 1; resize: none; padding: 0;
+  flex: 1; resize: none; padding: 0; margin: 0;
   font-size: 0.6875rem; color: rgba(0,0,0,0.8);
   background: transparent; border: none; outline: none;
-  max-height: 100px; line-height: 1.4; font-family: inherit; height: auto;
+  max-height: 80px; line-height: 1.3; font-family: inherit;
+  display: block; overflow-y: hidden; align-self: center;
 }
 .chat-input-textarea::placeholder { color: rgba(0,0,0,0.5); font-size: 0.6875rem; }
 .chat-input-textarea:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -101,7 +102,7 @@ const STYLES = `
 .chat-input-send svg { width: 14px; height: 14px; }
 
 @media (max-width: 480px) {
-  .chat-input-form { margin: 0 0.75rem 0.5rem; height: 52px; padding: 6px 6px 6px 16px; }
+  .chat-input-form { margin: 0 0.75rem 0.5rem; padding: 14px 6px 14px 16px; }
   .chat-input-textarea { font-size: 18px; }
   .chat-input-textarea::placeholder { font-size: 16px; }
   .chat-input-send { width: 40px; height: 40px; }

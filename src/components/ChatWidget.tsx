@@ -24,11 +24,11 @@ export function ChatWidget({ config }: ChatWidgetProps) {
   const [showChips, setShowChips] = useState(true);
   const [callbackSubmitting, setCallbackSubmitting] = useState(false);
 
-  const { messages, isTyping, isInitializing, error, sendMessage, clearError } =
+  const { messages, isTyping, isInitializing, error, sendMessage, initSession, clearError } =
     useChat({ config });
 
   const userMessageCount = messages.filter((m) => m.role === 'user').length;
-  const showCallbackCTA = userMessageCount >= 2 && widgetState === 'expanded';
+  const showCallbackCTA = messages.length >= 1 && widgetState === 'expanded';
 
   useEffect(() => {
     if (userMessageCount > 0) setShowChips(false);
@@ -59,6 +59,13 @@ export function ChatWidget({ config }: ChatWidgetProps) {
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, [widgetState]);
+
+  // Trigger session init (and greeting message) as soon as the widget opens
+  useEffect(() => {
+    if (widgetState === 'expanded' && messages.length === 0) {
+      initSession();
+    }
+  }, [widgetState, messages.length, initSession]);
 
   const handleExpand = useCallback(() => setWidgetState('expanded'), []);
   const handleClose  = useCallback(() => {
@@ -184,8 +191,8 @@ const STYLES = `
 }
 .widget-panel {
   display: flex; flex-direction: column; height: 100%;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
   border: none; border-radius: 32px; overflow: hidden;
 }
 .widget-panel--center { align-items: center; justify-content: center; }
