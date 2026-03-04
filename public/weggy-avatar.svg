@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <circle cx="40" cy="40" r="40" fill="#1B2F5B"/>
+  <!-- Garage door icon representing Weggy -->
+  <rect x="18" y="28" width="44" height="32" rx="3" fill="white" opacity="0.9"/>
+  <line x1="18" y1="36" x2="62" y2="36" stroke="#1B2F5B" stroke-width="2"/>
+  <line x1="18" y1="44" x2="62" y2="44" stroke="#1B2F5B" stroke-width="2"/>
+  <line x1="18" y1="52" x2="62" y2="52" stroke="#1B2F5B" stroke-width="2"/>
+  <!-- Orange handle dot -->
+  <circle cx="40" cy="58" r="3" fill="#F97316"/>
+  <!-- W for Weggy -->
+  <text x="40" y="24" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="13" font-weight="900" fill="#F97316">WEGGY</text>
+</svg>
