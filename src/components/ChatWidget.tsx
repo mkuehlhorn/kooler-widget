@@ -117,7 +117,9 @@ export function ChatWidget({ config }: ChatWidgetProps) {
           height: '100%',
           borderRadius: '0',
           overflow: 'hidden',
-          background: 'var(--widget-glass-bg)',
+          background: 'rgba(255, 255, 255, 0.42)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
         }}
       >
         <ChatHeader
@@ -206,7 +208,7 @@ export function ChatWidget({ config }: ChatWidgetProps) {
         widgetState === 'callback-form' ||
         widgetState === 'callback-success') && (
         <div
-          className="weggy-chat-panel weggy-panel-enter widget-glass flex flex-col"
+          className="weggy-chat-panel weggy-panel-enter flex flex-col"
           style={{
             width: '100%',
             maxWidth: '420px',

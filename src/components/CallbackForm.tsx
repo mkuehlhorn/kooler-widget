@@ -117,15 +117,16 @@ export function CallbackForm({
 
   const inputStyle: React.CSSProperties = {
     width: '100%',
-    padding: '9px 12px',
-    borderRadius: 10,
-    border: '1.5px solid #e5e7eb',
-    fontSize: 14,
+    padding: '9px 16px',
+    borderRadius: 9999,
+    border: '1.5px solid rgba(255,255,255,0.70)',
+    fontSize: 13,
     fontFamily: 'inherit',
     outline: 'none',
-    background: 'white',
+    background: 'rgba(255,255,255,0.75)',
+    backdropFilter: 'blur(8px)',
     color: '#111827',
-    transition: 'border-color 150ms ease',
+    transition: 'border-color 150ms ease, box-shadow 150ms ease',
   };
 
   const selectStyle: React.CSSProperties = {
@@ -238,9 +239,10 @@ export function CallbackForm({
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
                 placeholder="Jane Smith"
+                className="weggy-form-input"
                 style={{
                   ...inputStyle,
-                  borderColor: errors.name ? '#ef4444' : '#e5e7eb',
+                  borderColor: errors.name ? '#ef4444' : undefined,
                 }}
                 autoComplete="name"
               />
@@ -259,9 +261,10 @@ export function CallbackForm({
                 onChange={handlePhoneChange}
                 placeholder="(970) 123-4567"
                 inputMode="numeric"
+                className="weggy-form-input"
                 style={{
                   ...inputStyle,
-                  borderColor: errors.phone ? '#ef4444' : '#e5e7eb',
+                  borderColor: errors.phone ? '#ef4444' : undefined,
                 }}
                 autoComplete="tel"
               />
@@ -324,7 +327,7 @@ export function CallbackForm({
                 onChange={(e) => handleChange('consent', e.target.checked)}
                 style={{
                   marginTop: 2,
-                  accentColor: 'var(--widget-primary)',
+                  accentColor: '#E8713A',
                   cursor: 'pointer',
                   width: 14,
                   height: 14,
@@ -340,7 +343,7 @@ export function CallbackForm({
                   href={privacyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--widget-primary)', textDecoration: 'underline' }}
+                  style={{ color: '#E8713A', textDecoration: 'underline' }}
                 >
                   Privacy Policy
                 </a>
@@ -389,7 +392,7 @@ export function CallbackForm({
                 disabled={isSubmitting}
                 className="flex-1 py-2.5 rounded-full text-sm font-semibold text-white transition-all"
                 style={{
-                  background: isSubmitting ? '#9ca3af' : 'var(--widget-primary)',
+                  background: isSubmitting ? '#d1d5db' : '#E8713A',
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   border: 'none',
                   outline: 'none',

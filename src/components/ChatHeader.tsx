@@ -7,33 +7,34 @@ interface ChatHeaderProps {
   onClose?: () => void;
 }
 
-export function ChatHeader({
-  agentName,
-  companyName,
-  avatarPath,
-  onClose,
-}: ChatHeaderProps) {
+export function ChatHeader({ agentName, companyName, avatarPath, onClose }: ChatHeaderProps) {
   return (
     <div
       className="flex items-center gap-3 px-4 py-3 shrink-0"
       style={{
-        background: 'var(--widget-primary)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        background: 'rgba(255, 255, 255, 0.15)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.20)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
       }}
     >
       {/* Avatar */}
       <div
-        className="shrink-0 rounded-full overflow-hidden bg-white/20 flex items-center justify-center"
-        style={{ width: 40, height: 40 }}
+        className="shrink-0 rounded-full overflow-hidden flex items-center justify-center"
+        style={{
+          width: 36,
+          height: 36,
+          boxShadow: '0 3px 10px rgba(0,0,0,0.18)',
+          background: '#1a1a1a',
+        }}
       >
         <img
           src={avatarPath}
           alt={agentName}
-          width={40}
-          height={40}
-          style={{ objectFit: 'cover', width: 40, height: 40 }}
+          width={36}
+          height={36}
+          style={{ objectFit: 'cover', width: 36, height: 36 }}
           onError={(e) => {
-            // Fallback to initials if avatar fails to load
             const target = e.currentTarget;
             target.style.display = 'none';
             const fallback = target.nextSibling as HTMLElement | null;
@@ -41,41 +42,52 @@ export function ChatHeader({
           }}
         />
         <div
-          className="hidden items-center justify-center w-full h-full text-white font-bold text-sm"
+          className="hidden items-center justify-center w-full h-full font-bold text-sm"
+          style={{ color: '#E8713A' }}
           aria-hidden="true"
         >
           {agentName.charAt(0)}
         </div>
       </div>
 
-      {/* Text */}
+      {/* Agent info */}
       <div className="flex-1 min-w-0">
-        <div className="text-white font-semibold text-sm leading-tight truncate">
+        <div
+          className="font-semibold leading-tight truncate"
+          style={{ fontSize: '0.9375rem', color: '#1a1a1a', textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
+        >
           {agentName}
         </div>
-        <div className="text-white/70 text-xs leading-tight truncate">
+        <div
+          className="leading-tight truncate"
+          style={{ fontSize: '0.75rem', color: 'rgba(0,0,0,0.55)' }}
+        >
           {companyName}
         </div>
       </div>
 
       {/* Online indicator */}
-      <div className="flex items-center gap-1.5 mr-2 shrink-0">
+      <div className="flex items-center gap-1.5 shrink-0 mr-1">
         <span
-          className="inline-block w-2 h-2 rounded-full bg-emerald-400"
+          className="inline-block rounded-full"
+          style={{ width: 8, height: 8, background: '#22c55e' }}
           aria-hidden="true"
         />
-        <span className="text-white/70 text-xs">Online</span>
+        <span style={{ color: 'rgba(0,0,0,0.50)', fontSize: '0.75rem' }}>Online</span>
       </div>
 
       {/* Close button */}
       {onClose && (
         <button
           onClick={onClose}
-          className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+          className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+          style={{ color: 'rgba(0,0,0,0.45)', background: 'transparent' }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,0,0,0.08)'; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}
           aria-label="Close chat"
           type="button"
         >
-          <XIcon size={16} />
+          <XIcon size={14} />
         </button>
       )}
     </div>

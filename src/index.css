@@ -1,39 +1,45 @@
 /* ── Tailwind CSS 4 ─────────────────────────────────────────────────────────── */
 @import "tailwindcss";
 
-/* ── CSS Custom Properties ──────────────────────────────────────────────────── */
+/* ── Weggy Design Tokens ────────────────────────────────────────────────────── */
 :root {
-  --widget-primary: #1B2F5B;
-  --widget-accent: #F97316;
-  --widget-glass-bg: rgba(255, 255, 255, 0.72);
-  --widget-glass-border: rgba(255, 255, 255, 0.45);
-  --widget-glass-blur: 32px;
-  --widget-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.12);
-  --widget-shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.12);
-  --widget-radius-xl: 41px;
-  --widget-radius-lg: 24px;
-  --widget-radius-md: 16px;
-  --widget-radius-full: 9999px;
-  --widget-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --widget-transition-base: 280ms cubic-bezier(0.4, 0, 0.2, 1);
-  --widget-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* BRAND — orange is the only brand color */
+  --weggy-orange:          #E8713A;
+  --weggy-orange-hover:    #D4622A;
+  --weggy-orange-light:    rgba(232, 113, 58, 0.12);
+  --weggy-orange-glow:     rgba(232, 113, 58, 0.35);
+
+  /* LEGACY ALIASES — used by inline styles throughout components */
+  --widget-primary:        #E8713A;
+  --widget-accent:         #E8713A;
+
+  /* GLASS */
+  --weggy-glass-bg:        rgba(255, 255, 255, 0.40);
+  --weggy-glass-border:    rgba(255, 255, 255, 0.55);
+  --weggy-glass-blur:      24px;
+  --weggy-glass-shadow:    0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.10),
+                           inset 0 1px 0 rgba(255,255,255,0.60);
+
+  /* RADIUS */
+  --weggy-radius-xl:       32px;
+  --weggy-radius-full:     9999px;
+
+  /* EASING */
+  --weggy-ease-fast:       150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --weggy-ease-base:       280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --weggy-ease-slow:       500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Base reset ─────────────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   background: transparent;
   overflow: hidden;
@@ -48,139 +54,156 @@ body {
   justify-content: flex-end;
 }
 
-/* ── Glass morphism utility ─────────────────────────────────────────────────── */
-.widget-glass {
-  background: var(--widget-glass-bg);
-  border: 1px solid var(--widget-glass-border);
-  backdrop-filter: blur(var(--widget-glass-blur));
-  -webkit-backdrop-filter: blur(var(--widget-glass-blur));
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.22); }
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes weggy-panel-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.weggy-panel-enter {
+  animation: weggy-panel-in var(--weggy-ease-base) ease-out both;
 }
 
-/* ── Scrollbar hiding ───────────────────────────────────────────────────────── */
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── Typing dots animation ──────────────────────────────────────────────────── */
 @keyframes weggy-dot-bounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.5;
-  }
-  30% {
-    transform: translateY(-4px);
-    opacity: 1;
-  }
+  0%, 60%, 100% { transform: translateY(0);    opacity: 0.5; }
+  30%           { transform: translateY(-4px); opacity: 1;   }
 }
-
 .weggy-dot {
   display: inline-block;
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
-  background-color: var(--widget-primary);
+  background: var(--weggy-orange);
   animation: weggy-dot-bounce 1.1s ease-in-out infinite;
 }
+.weggy-dot:nth-child(1) { animation-delay: 0s; }
+.weggy-dot:nth-child(2) { animation-delay: 0.18s; }
+.weggy-dot:nth-child(3) { animation-delay: 0.36s; }
 
-.weggy-dot:nth-child(1) {
-  animation-delay: 0s;
+/* ── Collapsed Bar — Double Glass Pill (Figma-exact) ───────────────────────── */
+.weggy-outer-pill {
+  display: flex;
+  align-items: center;
+  background: rgba(180, 180, 180, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--weggy-radius-full);
+  padding: 5px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.05);
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow var(--weggy-ease-fast), transform var(--weggy-ease-fast);
+  -webkit-tap-highlight-color: transparent;
 }
-.weggy-dot:nth-child(2) {
-  animation-delay: 0.18s;
+.weggy-outer-pill:hover {
+  box-shadow: 0 6px 28px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
 }
-.weggy-dot:nth-child(3) {
-  animation-delay: 0.36s;
-}
+.weggy-outer-pill:active { transform: translateY(0); }
 
-/* ── Collapsed bar pulse animation ─────────────────────────────────────────── */
-.weggy-collapsed-bar {
-  max-width: 460px;
-  transition: max-width var(--widget-transition-slow),
-    padding var(--widget-transition-slow),
-    border-radius var(--widget-transition-slow);
+.weggy-bar-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
   overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  background: #1a1a1a;
 }
 
-.weggy-collapsed-bar.is-pulsing {
-  max-width: 56px;
-}
-
-.weggy-collapsed-bar .bar-inner {
-  max-width: 420px;
-  opacity: 1;
-  transition: max-width var(--widget-transition-slow),
-    opacity var(--widget-transition-slow);
+.weggy-inner-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--weggy-radius-full);
+  padding: 9px 8px 9px 12px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.45);
+  max-width: 340px;
   overflow: hidden;
   white-space: nowrap;
+  margin-left: 7px;
+  transition:
+    max-width var(--weggy-ease-slow),
+    opacity   var(--weggy-ease-slow),
+    padding   var(--weggy-ease-slow),
+    margin    var(--weggy-ease-slow);
 }
-
-.weggy-collapsed-bar.is-pulsing .bar-inner {
+.weggy-inner-pill.is-pulsing {
   max-width: 0;
   opacity: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
 }
 
-/* ── Chat panel enter animation ─────────────────────────────────────────────── */
-@keyframes weggy-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.weggy-bar-text { flex: 1; min-width: 0; }
+.weggy-bar-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+}
+.weggy-bar-sub {
+  font-size: 10.5px;
+  color: #555;
+  margin-top: 1px;
+  line-height: 1.2;
+}
+.weggy-bar-cta-btn {
+  background: var(--weggy-orange);
+  color: white;
+  border-radius: var(--weggy-radius-full);
+  padding: 6px 15px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px var(--weggy-orange-glow);
 }
 
-.weggy-panel-enter {
-  animation: weggy-panel-in var(--widget-transition-base) ease-out both;
+/* ── Form input focus ───────────────────────────────────────────────────────── */
+.weggy-form-input:focus {
+  border-color: var(--weggy-orange) !important;
+  box-shadow: 0 0 0 2.5px rgba(232, 113, 58, 0.18) !important;
+  outline: none;
 }
 
-/* ── Mobile: full screen ────────────────────────────────────────────────────── */
+/* ── Mobile ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  #root {
-    align-items: stretch;
-    justify-content: stretch;
-  }
+  #root { align-items: stretch; justify-content: stretch; }
 
   .weggy-chat-panel {
     border-radius: 0 !important;
     width: 100vw !important;
     height: 100dvh !important;
     max-height: 100dvh !important;
-    bottom: 0 !important;
-    right: 0 !important;
-    left: 0 !important;
   }
 
-  .weggy-collapsed-bar {
+  .weggy-outer-pill {
     max-width: calc(100vw - 24px);
     margin-right: 12px;
     margin-bottom: 12px;
   }
 
-  .weggy-callback-form-layout {
-    flex-direction: column !important;
-  }
-
-  .weggy-callback-avatar-col {
-    display: none !important;
-  }
-
-  /* Hide suggestion chips on mobile — keyboard + chips together leave no room for chat */
-  .weggy-suggestion-chips {
-    display: none !important;
-  }
+  .weggy-callback-form-layout { flex-direction: column !important; }
+  .weggy-callback-avatar-col  { display: none !important; }
+  .weggy-suggestion-chips     { display: none !important; }
 }
 
 /* ── iOS safe area ──────────────────────────────────────────────────────────── */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .weggy-safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  .weggy-safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
 
 /* ── Textarea ────────────────────────────────────────────────────────────────── */
@@ -190,7 +213,7 @@ textarea.weggy-input {
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 18px; /* Prevents iOS auto-zoom on focus (must be >= 16px) */
+  font-size: 16px; /* ≥16px prevents iOS auto-zoom */
   line-height: 1.4;
   min-height: 36px;
   max-height: 100px;
@@ -198,12 +221,7 @@ textarea.weggy-input {
   padding: 0;
   overflow-y: auto;
   scrollbar-width: none;
+  color: #1a1a1a;
 }
-
-textarea.weggy-input::-webkit-scrollbar {
-  display: none;
-}
-
-textarea.weggy-input::placeholder {
-  color: #9ca3af;
-}
+textarea.weggy-input::-webkit-scrollbar { display: none; }
+textarea.weggy-input::placeholder { color: rgba(0, 0, 0, 0.38); }

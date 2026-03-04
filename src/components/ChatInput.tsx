@@ -10,7 +10,6 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    // Auto-focus on mount (desktop)
     if (textareaRef.current && window.innerWidth > 480) {
       textareaRef.current.focus();
     }
@@ -20,8 +19,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     const el = textareaRef.current;
     if (!el) return;
     el.style.height = 'auto';
-    const newHeight = Math.min(el.scrollHeight, 100);
-    el.style.height = `${Math.max(newHeight, 36)}px`;
+    el.style.height = `${Math.min(Math.max(el.scrollHeight, 36), 100)}px`;
   }, []);
 
   const handleSend = useCallback(() => {
@@ -45,23 +43,21 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     [handleSend]
   );
 
-  const handleInput = useCallback(() => {
-    handleAutoResize();
-  }, [handleAutoResize]);
-
   return (
     <div
       className="px-3 py-3 shrink-0"
-      style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}
+      style={{ borderTop: '1px solid rgba(255,255,255,0.18)' }}
     >
       <div
-        className="flex items-end gap-2 rounded-full px-4 py-2"
+        className="flex items-end gap-2"
         style={{
-          background: 'rgba(255,255,255,0.85)',
-          border: '1px solid rgba(0,0,0,0.1)',
+          background: 'rgba(255, 255, 255, 0.92)',
+          border: '1px solid rgba(255, 255, 255, 0.65)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+          boxShadow: '0 5px 20px rgba(0,0,0,0.18)',
+          borderRadius: 9999,
+          padding: '4px 4px 4px 16px',
         }}
       >
         <textarea
@@ -71,7 +67,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           rows={1}
           disabled={disabled}
           onKeyDown={handleKeyDown}
-          onInput={handleInput}
+          onInput={handleAutoResize}
           aria-label="Type your message"
           style={{ height: 36 }}
         />
@@ -80,14 +76,26 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           disabled={disabled}
           type="button"
           aria-label="Send message"
-          className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-white transition-all"
+          className="shrink-0 flex items-center justify-center text-white transition-all"
           style={{
-            background: disabled ? '#d1d5db' : 'var(--widget-primary)',
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            background: disabled ? '#d1d5db' : '#E8713A',
+            boxShadow: disabled ? 'none' : '0 4px 14px rgba(232,113,58,0.40)',
+            border: 'none',
             cursor: disabled ? 'not-allowed' : 'pointer',
-            transition: 'background 150ms ease',
+            transition: 'background 150ms ease, box-shadow 150ms ease, transform 100ms ease',
+            flexShrink: 0,
+          }}
+          onMouseEnter={(e) => {
+            if (!disabled) (e.currentTarget as HTMLButtonElement).style.background = '#D4622A';
+          }}
+          onMouseLeave={(e) => {
+            if (!disabled) (e.currentTarget as HTMLButtonElement).style.background = '#E8713A';
           }}
         >
-          <SendIcon size={15} />
+          <SendIcon size={14} />
         </button>
       </div>
     </div>

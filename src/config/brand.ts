@@ -28,8 +28,8 @@ export const BRAND: BrandConfig = {
   callbackNote: "I'll make sure you get the fastest possible service!",
   callbackSuccessTitle: "You're all set!",
   callbackSuccessMessage: "Got it! We'll call you within 30 minutes during business hours.",
-  primaryColor: '#1B2F5B',
-  accentColor: '#F97316',
+  primaryColor: '#E8713A',
+  accentColor: '#E8713A',
   avatarPath: '/weggy-avatar.svg', // Replace with /weggy-avatar.jpg when real photo is ready
   privacyPolicyUrl: 'https://koolergaragedoors.com/privacy',
   emergencyPhone: '+1-XXX-XXX-XXXX', // ← FILL IN before go-live
