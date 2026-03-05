@@ -161,10 +161,10 @@ const STYLES = `
   padding: 2.5rem 2.5rem 0.5rem; position: relative;
 }
 .cb-form-title {
-  font-size: 0.875rem; font-weight: 600; color: #2d2926; margin: 0;
+  font-size: 1rem; font-weight: 700; color: #111; margin: 0;
   text-align: center;
 }
-.cb-form-subtitle { font-size: 0.6rem; color: rgba(0,0,0,0.5); margin: 0.1rem 0 0; text-align: center; }
+.cb-form-subtitle { font-size: 0.75rem; font-weight: 500; color: rgba(0,0,0,0.75); margin: 0.1rem 0 0; text-align: center; }
 .cb-form-close {
   position: absolute; top: 2rem; right: 1.2rem; width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
@@ -177,16 +177,16 @@ const STYLES = `
 .cb-form { flex: 1; display: flex; flex-direction: column; gap: 0.45rem; padding: 0 0.875rem 0.875rem; }
 .cb-form-error {
   background: rgba(239,68,68,0.15); color: #dc2626;
-  padding: 0.3rem 0.5rem; border-radius: 8px; font-size: 0.625rem; text-align: center;
+  padding: 0.3rem 0.5rem; border-radius: 8px; font-size: 0.75rem; text-align: center;
 }
 .cb-form-row { display: flex; gap: 0.5rem; }
 .cb-form-field { flex: 1; display: flex; flex-direction: column; gap: 0.1rem; }
 .cb-form-field label {
-  font-size: 0.5rem; font-weight: 600; color: rgba(0,0,0,0.55);
+  font-size: 0.625rem; font-weight: 700; color: rgba(0,0,0,0.8);
   text-transform: uppercase; letter-spacing: 0.04em; padding-left: 0.5rem;
 }
 .cb-form-field input, .cb-form-field select {
-  height: 28px; padding: 0 0.65rem; font-size: 0.6875rem; color: #1F2937;
+  height: 28px; padding: 0 0.65rem; font-size: 0.8125rem; color: #111;
   background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.6);
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   border-radius: 9999px; outline: none; transition: all 0.15s ease;
@@ -203,7 +203,7 @@ const STYLES = `
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 0.5rem center; padding-right: 1.4rem;
 }
-.cb-form-field-error { font-size: 0.55rem; color: #dc2626; padding-left: 0.5rem; }
+.cb-form-field-error { font-size: 0.6875rem; color: #dc2626; padding-left: 0.5rem; }
 
 /* 50/50 bottom split */
 .cb-bottom { flex: 1; display: flex; align-items: stretch; padding-top: 0.25rem; }
@@ -226,8 +226,8 @@ const STYLES = `
   flex: 1; display: flex; flex-direction: column;
   justify-content: center; align-items: center; text-align: center; width: 100%;
 }
-.cb-note-title { display: block; font-size: 0.8rem; font-weight: 700; color: #111; margin-bottom: 0.3rem; }
-.cb-note p { font-size: 0.65rem; line-height: 1.55; color: rgba(0,0,0,0.65); margin: 0; }
+.cb-note-title { display: block; font-size: 0.9375rem; font-weight: 700; color: #111; margin-bottom: 0.3rem; }
+.cb-note p { font-size: 0.8rem; line-height: 1.55; color: rgba(0,0,0,0.85); font-weight: 500; margin: 0; }
 
 .cb-consent {
   display: flex; align-items: flex-start; gap: 0.4rem; width: 100%;
@@ -240,12 +240,12 @@ const STYLES = `
   width: 12px; height: 12px; margin-top: 1px; accent-color: #E8713A;
   cursor: pointer; flex-shrink: 0;
 }
-.cb-consent span { font-size: 0.55rem; color: rgba(0,0,0,0.6); line-height: 1.4; }
+.cb-consent span { font-size: 0.6875rem; font-weight: 500; color: rgba(0,0,0,0.85); line-height: 1.4; }
 .cb-consent a { color: #E8713A; text-decoration: underline; }
 
 .cb-actions { display: flex; gap: 0.4rem; width: 100%; }
 .cb-btn-cancel, .cb-btn-submit {
-  flex: 1; padding: 0.28rem 0; font-size: 0.625rem; font-weight: 600;
+  flex: 1; padding: 0.28rem 0; font-size: 0.75rem; font-weight: 600;
   border: none; border-radius: 9999px; cursor: pointer; transition: all 0.15s ease; white-space: nowrap;
 }
 .cb-btn-cancel {
