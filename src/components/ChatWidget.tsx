@@ -95,7 +95,7 @@ export function ChatWidget({ config }: ChatWidgetProps) {
 
   const handleCallbackCancel = useCallback(() => setWidgetState('expanded'), []);
 
-  const avatarPath = config.avatarPath ?? '/weggy-avatar.svg';
+  const avatarPath = config.avatarPath ?? '/weggy-avatar.jpg';
 
   // ── Collapsed ───────────────────────────────────────────────────────────────
   if (widgetState === 'collapsed') {
