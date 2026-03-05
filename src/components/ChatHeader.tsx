@@ -47,12 +47,12 @@ const STYLES = `
 .chat-header-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .chat-header-title { text-align: center; }
 .chat-header-title h1 {
-  font-size: 0.9375rem; font-weight: 600; color: #000;
+  font-size: 1.0625rem; font-weight: 700; color: #000;
   margin: 0 0 0.125rem; line-height: 1.2;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .chat-header-title p {
-  font-size: 0.9375rem; font-weight: 400; color: rgba(0,0,0,0.8);
+  font-size: 0.8125rem; font-weight: 500; color: rgba(0,0,0,0.85);
   margin: 0; line-height: 1.3;
   text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
@@ -61,7 +61,7 @@ const STYLES = `
   width: 24px; height: 24px;
   display: flex; align-items: center; justify-content: center;
   background: transparent; border: none; border-radius: 50%;
-  cursor: pointer; color: rgba(0,0,0,0.5);
+  cursor: pointer; color: rgba(0,0,0,0.7);
   transition: all 150ms ease;
 }
 .chat-header-close:hover { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.8); }

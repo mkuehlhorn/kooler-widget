@@ -25,12 +25,12 @@ const STYLES = `
   display: flex; align-items: center; justify-content: space-between; margin: 0 1rem; padding: 0;
 }
 .callback-cta-text {
-  font-size: 0.6875rem; color: rgba(0,0,0,0.95); font-weight: 600;
+  font-size: 0.8125rem; color: rgba(0,0,0,0.95); font-weight: 700;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .callback-cta-btn {
   padding: 0.25rem 1.25rem; background: #E8713A;
-  color: white; font-size: 0.625rem; font-weight: 600;
+  color: white; font-size: 0.75rem; font-weight: 600;
   border: none; border-radius: 9999px; cursor: pointer;
   transition: all 150ms ease; white-space: nowrap; flex-shrink: 0;
   box-shadow: 0 5px 18px rgba(0,0,0,0.35); text-shadow: 0 1px 3px rgba(0,0,0,0.3);

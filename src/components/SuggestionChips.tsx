@@ -35,8 +35,8 @@ export function SuggestionChips({ chips, onSelect }: SuggestionChipsProps) {
 const STYLES = `
 .suggestion-chips-container { padding: 0.5rem 0.75rem; background: transparent; }
 .suggestion-chips-label {
-  font-size: 0.6875rem; color: rgba(0,0,0,0.5);
-  text-align: center; margin: 0 0 0.625rem; font-weight: 400;
+  font-size: 0.8125rem; color: rgba(0,0,0,0.8);
+  text-align: center; margin: 0 0 0.625rem; font-weight: 500;
 }
 .suggestion-chips-grid {
   display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
@@ -44,7 +44,7 @@ const STYLES = `
 }
 .suggestion-chip {
   display: inline-flex; align-items: center; padding: 0.1875rem 0.75rem;
-  font-size: 0.6875rem; color: rgba(0,0,0,0.75);
+  font-size: 0.8125rem; color: rgba(0,0,0,0.85);
   background: rgba(255,255,255,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.7); border-radius: 9999px;
   cursor: pointer; white-space: nowrap;

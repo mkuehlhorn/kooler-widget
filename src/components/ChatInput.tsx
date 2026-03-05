@@ -82,12 +82,12 @@ const STYLES = `
 }
 .chat-input-textarea {
   flex: 1; resize: none; padding: 0; margin: 0;
-  font-size: 0.6875rem; color: rgba(0,0,0,0.8);
+  font-size: 0.8125rem; color: rgba(0,0,0,0.85); font-weight: 500;
   background: transparent; border: none; outline: none;
   max-height: 80px; line-height: 1.3; font-family: inherit;
   display: block; overflow-y: hidden; align-self: center;
 }
-.chat-input-textarea::placeholder { color: rgba(0,0,0,0.5); font-size: 0.6875rem; }
+.chat-input-textarea::placeholder { color: rgba(0,0,0,0.55); font-size: 0.8125rem; }
 .chat-input-textarea:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Send button — 28px circle */

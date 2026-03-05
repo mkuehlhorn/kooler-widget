@@ -107,7 +107,7 @@ const STYLES = `
 .message-error svg { width: 14px; height: 14px; flex-shrink: 0; }
 .message-error span { font-size: 0.75rem; }
 
-.message-text { font-size: 0.65rem; line-height: 1.4; white-space: pre-wrap; word-break: break-word; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.message-text { font-size: 0.8rem; font-weight: 500; color: #111; line-height: 1.4; white-space: pre-wrap; word-break: break-word; margin: 0; }
 
 @media (max-width: 480px) {
   .message-avatar { width: 36px; height: 36px; }
