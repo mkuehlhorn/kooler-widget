@@ -207,14 +207,15 @@ const STYLES = `
 /* 50/50 bottom split */
 .cb-bottom { flex: 1; display: flex; align-items: stretch; padding-top: 0.25rem; }
 .cb-portrait-col { width: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-/* 164px circle, zoomed to face, raised */
+/* 180px circle, logo fill */
 .cb-portrait {
-  width: 164px; height: 164px; border-radius: 50%; overflow: hidden;
+  width: 180px; height: 180px; border-radius: 50%; overflow: hidden;
+  background: #ffffff;
   box-shadow: var(--w-shadow-raised); transform: translateY(-1.75rem);
 }
 .cb-portrait img {
   width: 100%; height: 100%; object-fit: contain;
-  object-position: center center; transform: scale(0.85); transform-origin: center center;
+  object-position: center center;
 }
 .cb-right {
   width: 50%; display: flex; flex-direction: column;
