@@ -19,22 +19,23 @@ export function CallbackCTA({ onRequestCall }: CallbackCTAProps) {
 const STYLES = `
 .callback-cta { display: flex; flex-direction: column; padding: 0 0 0.5rem; background: transparent; }
 .callback-cta::before {
-  content: ''; height: 1px; background: var(--w-dark); margin: 0 1rem 0.375rem;
+  content: ''; height: 1px; background: rgba(255,255,255,0.7); margin: 0 1rem 0.375rem;
 }
 .callback-cta-row {
   display: flex; align-items: center; justify-content: space-between; margin: 0 1rem; padding: 0;
 }
 .callback-cta-text {
-  font-size: 0.6875rem; color: #2d2926; font-weight: 600;
+  font-size: 0.6875rem; color: rgba(0,0,0,0.95); font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .callback-cta-btn {
   padding: 0.25rem 1.25rem; background: #E8713A;
   color: white; font-size: 0.625rem; font-weight: 600;
   border: none; border-radius: 9999px; cursor: pointer;
   transition: all 150ms ease; white-space: nowrap; flex-shrink: 0;
-  box-shadow: var(--w-shadow-orange);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.35); text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
-.callback-cta-btn:hover { background: #D4622A; box-shadow: 2px 2px 6px rgba(180,80,20,0.35), -1px -1px 4px rgba(255,200,150,0.3); }
+.callback-cta-btn:hover { background: #D4622A; transform: scale(1.02); }
 .callback-cta-btn:active { transform: scale(0.98); }
 
 @media (max-width: 480px) {

@@ -191,10 +191,9 @@ const STYLES = `
 }
 .widget-panel {
   display: flex; flex-direction: column; height: 100%;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.55);
-  border-radius: 32px; overflow: hidden;
+  background: rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+  border: none; border-radius: 32px; overflow: hidden;
 }
 .widget-panel--center { align-items: center; justify-content: center; }
 .widget-loading {
@@ -212,7 +211,6 @@ const STYLES = `
 .widget-error-retry {
   padding: 0.375rem 1.25rem; background: #E8713A; color: white;
   border: none; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
-  box-shadow: var(--w-shadow-orange);
 }
 .widget-success-content { text-align: center; padding: 1.5rem; }
 .widget-success-icon { margin-bottom: 0.75rem; }

@@ -79,36 +79,35 @@ const STYLES = `
   width: 22px; height: 22px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; overflow: hidden;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 .message-avatar svg { width: 11px; height: 11px; }
 .message-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.message-avatar-user { background: var(--w-bg); box-shadow: var(--w-shadow-sm-raised); color: #7a6e67; }
-.message-avatar-assistant { background: #E8713A; box-shadow: var(--w-shadow-orange); }
+.message-avatar-user { background: #e5e7eb; color: #6b7280; }
+.message-avatar-assistant { background: #E8713A; }
 
 .message-bubble {
   max-width: 80%; padding: 0.4rem 0.6rem; border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
 }
-/* USER — light frosted */
+/* USER — white glass */
 .message-bubble-user {
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-  color: #2d2926; border-bottom-right-radius: 4px;
+  background: rgba(255,255,255,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.6); color: #1F2937;
+  border-bottom-right-radius: 4px;
 }
-/* AI — slightly less opaque */
+/* AI — white glass */
 .message-bubble-assistant {
-  background: rgba(255,255,255,0.55);
-  border: 1px solid rgba(255,255,255,0.5);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  color: #2d2926; border-bottom-left-radius: 4px;
+  background: rgba(255,255,255,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.7); color: #1F2937;
+  border-bottom-left-radius: 4px;
 }
 .message-bubble-error { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); }
 .message-error { display: flex; align-items: center; gap: 0.375rem; color: #dc2626; }
 .message-error svg { width: 14px; height: 14px; flex-shrink: 0; }
 .message-error span { font-size: 0.75rem; }
 
-.message-text { font-size: 0.65rem; line-height: 1.4; white-space: pre-wrap; word-break: break-word; margin: 0; color: #2d2926; }
+.message-text { font-size: 0.65rem; line-height: 1.4; white-space: pre-wrap; word-break: break-word; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
 
 @media (max-width: 480px) {
   .message-avatar { width: 36px; height: 36px; }
