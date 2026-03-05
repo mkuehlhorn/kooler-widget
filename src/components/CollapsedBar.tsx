@@ -43,7 +43,7 @@ export function CollapsedBar({
       </div>
       <div className="collapsed-bar-avatar">
         <img
-          src={avatarUrl || '/weggy-avatar.svg'}
+          src={avatarUrl || '/weggy-avatar.jpg'}
           alt="Weggy"
           className="collapsed-bar-avatar-img"
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}

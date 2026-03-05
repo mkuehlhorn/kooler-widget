@@ -10,7 +10,7 @@ export function ChatHeader({ onClose, avatarUrl }: ChatHeaderProps) {
     <header className="chat-header">
       <div className="chat-header-avatar">
         <img
-          src={avatarUrl || '/weggy-avatar.svg'}
+          src={avatarUrl || '/weggy-avatar.jpg'}
           alt="Weggy"
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
         />
