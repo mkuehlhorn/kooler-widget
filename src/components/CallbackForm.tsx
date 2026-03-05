@@ -213,8 +213,8 @@ const STYLES = `
   box-shadow: var(--w-shadow-raised); transform: translateY(-1.75rem);
 }
 .cb-portrait img {
-  width: 100%; height: 100%; object-fit: cover;
-  object-position: center 5%; transform: scale(1.7); transform-origin: center 15%;
+  width: 100%; height: 100%; object-fit: contain;
+  object-position: center center; transform: scale(0.85); transform-origin: center center;
 }
 .cb-right {
   width: 50%; display: flex; flex-direction: column;

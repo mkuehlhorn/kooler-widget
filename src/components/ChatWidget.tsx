@@ -191,8 +191,11 @@ const STYLES = `
 }
 .widget-panel {
   display: flex; flex-direction: column; height: 100%;
-  background: var(--w-bg); box-shadow: var(--w-shadow-raised);
-  border: none; border-radius: 32px; overflow: hidden;
+  background: var(--w-bg);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10),
+              -2px -2px 10px rgba(255,255,255,0.75), 4px 4px 14px rgba(180,170,160,0.55);
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 32px; overflow: hidden;
 }
 .widget-panel--center { align-items: center; justify-content: center; }
 .widget-loading {
