@@ -35,7 +35,7 @@ export function SuggestionChips({ chips, onSelect }: SuggestionChipsProps) {
 const STYLES = `
 .suggestion-chips-container { padding: 0.5rem 0.75rem; background: transparent; }
 .suggestion-chips-label {
-  font-size: 0.6875rem; color: rgba(0,0,0,0.5);
+  font-size: 0.6875rem; color: #7a6e67;
   text-align: center; margin: 0 0 0.625rem; font-weight: 400;
 }
 .suggestion-chips-grid {
@@ -44,16 +44,14 @@ const STYLES = `
 }
 .suggestion-chip {
   display: inline-flex; align-items: center; padding: 0.1875rem 0.75rem;
-  font-size: 0.6875rem; color: rgba(0,0,0,0.75);
-  background: rgba(255,255,255,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.7); border-radius: 9999px;
+  font-size: 0.6875rem; color: #4a3f3a;
+  background: var(--w-bg); box-shadow: var(--w-shadow-sm-raised);
+  border: none; border-radius: 9999px;
   cursor: pointer; white-space: nowrap;
   transition: all 150ms ease; font-weight: 500;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
 }
 .suggestion-chip:hover {
-  background: rgba(255,255,255,0.75); border-color: #E8713A; color: #E8713A;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: var(--w-shadow-pressed); background: var(--w-bg); color: #E8713A;
 }
 .suggestion-chip:active { transform: scale(0.98); }
 @media (max-width: 480px) { .suggestion-chips-container { display: none; } }

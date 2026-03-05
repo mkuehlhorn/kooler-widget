@@ -3,19 +3,28 @@
 
 /* ── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
-  --weggy-primary:       #E8713A;
-  --weggy-primary-hover: #D4622A;
-  --weggy-text:          #1F2937;
-  --weggy-text-secondary:#6B7280;
-  --weggy-glass-bg:      rgba(255, 255, 255, 0.34);
-  --weggy-glass-border:  rgba(255, 255, 255, 0.5);
-  --weggy-glass-blur:    32px;
-  --weggy-shadow-glass:  0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
-  --weggy-radius-full:   9999px;
+  /* Neumorphic base palette */
+  --w-bg:           #ece8e2;
+  --w-dark:         #c9c4be;
+  --w-light:        #ffffff;
+  --w-orange:       #E8713A;
+  --w-orange-hover: #D4622A;
 
-  /* Legacy aliases */
+  /* Shadow recipes */
+  --w-shadow-flat:     4px 4px 10px var(--w-dark), -4px -4px 10px var(--w-light);
+  --w-shadow-raised:   6px 6px 14px var(--w-dark), -4px -4px 10px var(--w-light);
+  --w-shadow-pressed:  inset 3px 3px 8px var(--w-dark), inset -2px -2px 6px var(--w-light);
+  --w-shadow-sm-flat:  3px 3px 7px var(--w-dark), -2px -2px 6px var(--w-light);
+  --w-shadow-sm-raised:4px 4px 8px var(--w-dark), -3px -3px 7px var(--w-light);
+  --w-shadow-orange:   4px 4px 10px rgba(180,80,20,0.35), -2px -2px 6px rgba(255,200,150,0.4);
+
+  /* Legacy aliases — kept for loader.js color injection */
   --widget-primary: #E8713A;
   --widget-accent:  #E8713A;
+  --weggy-primary:       #E8713A;
+  --weggy-primary-hover: #D4622A;
+  --weggy-text:          #2d2926;
+  --weggy-text-secondary:#7a6e67;
 }
 
 /* ── Base reset ─────────────────────────────────────────────────────────────── */
@@ -33,29 +42,17 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Glass utility classes ──────────────────────────────────────────────────── */
-.glass {
-  background: var(--weggy-glass-bg);
-  backdrop-filter: blur(var(--weggy-glass-blur));
-  -webkit-backdrop-filter: blur(var(--weggy-glass-blur));
-  border: 1px solid var(--weggy-glass-border);
-  box-shadow: var(--weggy-shadow-glass), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.glass-panel {
-  background: var(--weggy-glass-bg);
-  backdrop-filter: blur(var(--weggy-glass-blur));
-  -webkit-backdrop-filter: blur(var(--weggy-glass-blur));
-  border: 1px solid var(--weggy-glass-border);
-  box-shadow: var(--weggy-shadow-glass), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  border-radius: 41px;
-}
+/* ── Neumorphic utility classes ─────────────────────────────────────────────── */
+.nm-flat    { background: var(--w-bg); box-shadow: var(--w-shadow-flat);    border: none; }
+.nm-raised  { background: var(--w-bg); box-shadow: var(--w-shadow-raised);  border: none; }
+.nm-pressed { background: var(--w-bg); box-shadow: var(--w-shadow-pressed); border: none; }
+.nm-orange  { background: var(--w-orange); box-shadow: var(--w-shadow-orange); border: none; color: #fff; }
 
 /* ── Scrollbar ──────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.22); }
+::-webkit-scrollbar-thumb { background: var(--w-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa49e; }
 
 /* ── Animations ─────────────────────────────────────────────────────────────── */
 @keyframes fadeIn    { from { opacity: 0; }                               to { opacity: 1; } }

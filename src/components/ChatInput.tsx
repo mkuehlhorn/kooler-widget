@@ -73,12 +73,12 @@ export const ChatInput = forwardRef(function ChatInput(
 
 // Self-injected styles — PRD spec exactly
 const STYLES = `
-/* Pill input — fixed height, flex centers textarea vertically */
+/* Pill input — fixed height, recessed nm treatment */
 .chat-input-form {
   display: flex; align-items: center;
-  background: rgba(255,255,255,0.95); border-radius: 9999px;
+  background: var(--w-bg); border-radius: 9999px;
   margin: 0 1rem 0.75rem; height: 36px; padding: 0 4px 0 1rem;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3); border: none;
+  box-shadow: var(--w-shadow-pressed); border: none;
 }
 .chat-input-textarea {
   flex: 1; resize: none; padding: 0; margin: 0;
@@ -95,9 +95,9 @@ const STYLES = `
   width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
   background: #E8713A; color: white; border: none; border-radius: 50%;
   cursor: pointer; transition: all 150ms ease; flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  box-shadow: var(--w-shadow-orange);
 }
-.chat-input-send:hover:not(:disabled) { background: #D4622A; }
+.chat-input-send:hover:not(:disabled) { background: #D4622A; box-shadow: var(--w-shadow-pressed); }
 .chat-input-send:disabled { background: #E8713A; opacity: 0.7; cursor: default; }
 .chat-input-send svg { width: 14px; height: 14px; }
 
