@@ -75,8 +75,9 @@ const STYLES = `
 .collapsed-bar-pill {
   display: flex; align-items: center; flex: 1; min-width: 0; max-width: 460px;
   overflow: hidden; padding: 6px 16px;
-  background: transparent; box-shadow: none;
-  border-radius: 9999px; border: none;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 9999px;
   margin-left: 2px; margin-right: 6px; white-space: nowrap; opacity: 1;
   transition:
     max-width 0.45s cubic-bezier(0.4,0,0.2,1),
