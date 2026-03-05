@@ -45,13 +45,16 @@ const STYLES = `
 .suggestion-chip {
   display: inline-flex; align-items: center; padding: 0.1875rem 0.75rem;
   font-size: 0.6875rem; color: #4a3f3a;
-  background: var(--w-bg); box-shadow: var(--w-shadow-sm-raised);
-  border: none; border-radius: 9999px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border-radius: 9999px;
   cursor: pointer; white-space: nowrap;
   transition: all 150ms ease; font-weight: 500;
 }
 .suggestion-chip:hover {
-  box-shadow: var(--w-shadow-pressed); background: var(--w-bg); color: #E8713A;
+  background: rgba(255,255,255,0.88); color: #E8713A;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
 }
 .suggestion-chip:active { transform: scale(0.98); }
 @media (max-width: 480px) { .suggestion-chips-container { display: none; } }
