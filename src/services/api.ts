@@ -165,6 +165,7 @@ export async function streamMessage(params: {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
+  let currentEvent = '';
 
   try {
     while (true) {
@@ -178,23 +179,38 @@ export async function streamMessage(params: {
 
       for (const line of lines) {
         const trimmed = line.trim();
-        if (!trimmed) continue;
 
-        if (trimmed.startsWith('event: token')) {
+        // Blank line resets event type (SSE spec)
+        if (!trimmed) {
+          currentEvent = '';
           continue;
         }
 
-        if (trimmed.startsWith('event: done')) {
-          onDone();
-          return;
-        }
-
-        if (trimmed.startsWith('event: error')) {
+        if (trimmed.startsWith('event: ')) {
+          currentEvent = trimmed.slice(7).trim();
+          // Handle event-only done signal
+          if (currentEvent === 'done') {
+            onDone();
+            return;
+          }
           continue;
         }
 
         if (trimmed.startsWith('data: ')) {
           const rawData = trimmed.slice(6);
+
+          // Only process data for token events (or untyped events)
+          // Skip tool_start, tool_done, and other non-content events
+          if (currentEvent && currentEvent !== 'token') {
+            // Check for error event data
+            if (currentEvent === 'error') {
+              try {
+                const parsed = JSON.parse(rawData) as { error?: string };
+                if (parsed.error) { onError(parsed.error); return; }
+              } catch { /* ignore */ }
+            }
+            continue;
+          }
 
           try {
             const parsed = JSON.parse(rawData) as { error?: string; token?: string; type?: string };
