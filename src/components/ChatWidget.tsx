@@ -191,10 +191,9 @@ const STYLES = `
 }
 .widget-panel {
   display: flex; flex-direction: column; height: 100%;
-  background: var(--w-bg);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10),
-              -2px -2px 10px rgba(255,255,255,0.75), 4px 4px 14px rgba(180,170,160,0.55);
-  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.55);
   border-radius: 32px; overflow: hidden;
 }
 .widget-panel--center { align-items: center; justify-content: center; }
