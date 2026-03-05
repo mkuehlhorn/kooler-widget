@@ -129,7 +129,7 @@ export function CallbackForm({ onSubmit, onCancel, config, isSubmitting }: Callb
           <div className="cb-right">
             <div className="cb-note">
               <span className="cb-note-title">Weggy's Note</span>
-              <p>Ready to get your garage door fixed? I'll make sure the right technician reaches you at the time that works best for you.</p>
+              <p>"You can't sell trust. You build it — with persistence, grit, and a commitment to doing right by people. Integrity, respect, and honor...are the values at the heart of our work family. They're what push us to go above and beyond, every time."</p>
             </div>
             <label className={`cb-consent${errors.consent ? ' error' : ''}`}>
               <input type="checkbox" checked={formData.consent}
