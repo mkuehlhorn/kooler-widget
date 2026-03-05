@@ -208,9 +208,9 @@ const STYLES = `
 /* 50/50 bottom split */
 .cb-bottom { flex: 1; display: flex; align-items: stretch; padding-top: 0.25rem; }
 .cb-portrait-col { width: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-/* 180px circle, logo fill */
+/* 210px circle, logo fill */
 .cb-portrait {
-  width: 180px; height: 180px; border-radius: 50%; overflow: hidden;
+  width: 210px; height: 210px; border-radius: 50%; overflow: hidden;
   background: #ffffff;
   box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-1.75rem);
 }
