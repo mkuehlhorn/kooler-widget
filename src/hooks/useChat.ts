@@ -145,6 +145,24 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
       setSession(newSession);
       sessionRef.current = newSession;
 
+      // Tell the parent page a real chat session now exists, so it can fire the
+      // WhatConverts "Chat / Started" lead event. The tracking tag lives on the
+      // parent only — $wc_leads does not exist inside this iframe and cannot be
+      // reached across the origin boundary. Deliberately NOT on the
+      // restored-session path above: that is a resumed chat, not a new lead.
+      // No session id, email, phone or message content crosses — the parent
+      // gets a bare signal and nothing else.
+      if (window.parent !== window) {
+        try {
+          window.parent.postMessage(
+            { source: 'weggy-widget', type: 'weggy:session-started' },
+            '*'
+          );
+        } catch {
+          // A blocked postMessage must never break the chat.
+        }
+      }
+
       // Stream greeting with typewriter animation
       const greetingText = data.greeting ?? config.greeting;
       const greetingId = generateId();
