@@ -96,13 +96,14 @@ const STYLES = `
 .collapsed-bar-cta {
   display: flex; align-items: center; justify-content: center;
   padding: 5px 14px;
-  background: #E8713A;
-  color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  /* Kooler brand guide orange with Black 4 text: white on #FF671F is 2.9:1,
+     Black 4 #31261D is 5.1:1 (WCAG AA). Matches the website buttons. */
+  background: #FF671F;
+  color: #31261D; font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
   border-radius: 9999px; white-space: nowrap; flex-shrink: 0;
   transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  text-shadow: 0 1px 1px rgba(0,0,0,0.15);
 }
-.collapsed-bar-wrapper:hover .collapsed-bar-cta { background: #D4622A; }
+.collapsed-bar-wrapper:hover .collapsed-bar-cta { filter: brightness(0.95); }
 
 .collapsed-bar-avatar {
   width: 44px; height: 44px; border-radius: 50%; overflow: hidden;

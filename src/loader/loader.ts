@@ -48,8 +48,8 @@
   const mode = attr('mode', 'dock') as 'dock' | 'inline';
   const market = attr('market', 'us');
   const language = attr('language', 'en');
-  const primaryColor = attr('primary-color', '#E8713A');
-  const accentColor = attr('accent-color', '#E8713A');
+  const primaryColor = attr('primary-color', '#FF671F');
+  const accentColor = attr('accent-color', '#FF671F');
   const agentName = attr('agent-name', 'Weggy');
   const companyName = attr('company-name', 'Kooler Garage Doors');
   const greeting = attr(
