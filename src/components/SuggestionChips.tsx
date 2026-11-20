@@ -52,7 +52,7 @@ const STYLES = `
   box-shadow: 0 3px 12px rgba(0,0,0,0.2);
 }
 .suggestion-chip:hover {
-  background: rgba(255,255,255,0.75); border-color: #E8713A; color: #E8713A;
+  background: rgba(255,255,255,0.75); border-color: #FF671F; color: #31261D;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 .suggestion-chip:active { transform: scale(0.98); }

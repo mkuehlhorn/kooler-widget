@@ -64,7 +64,7 @@ const STYLES = `
 }
 .mette-typing-wrap { display: flex; gap: 4px; padding: 3px 2px; align-items: center; }
 .mette-typing-dot {
-  width: 5px; height: 5px; border-radius: 50%; background: #D4622A;
+  width: 5px; height: 5px; border-radius: 50%; background: #FF671F;
   animation: mette-dot-bounce 1.1s ease-in-out infinite; flex-shrink: 0;
 }
 .mette-typing-dot:nth-child(2) { animation-delay: 0.18s; }
@@ -84,7 +84,7 @@ const STYLES = `
 .message-avatar svg { width: 11px; height: 11px; }
 .message-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .message-avatar-user { background: #e5e7eb; color: #6b7280; }
-.message-avatar-assistant { background: #E8713A; }
+.message-avatar-assistant { background: #FF671F; }
 
 .message-bubble {
   max-width: 80%; padding: 0.4rem 0.6rem; border-radius: 10px;

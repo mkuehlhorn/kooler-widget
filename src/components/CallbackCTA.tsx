@@ -29,13 +29,13 @@ const STYLES = `
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .callback-cta-btn {
-  padding: 0.25rem 1.25rem; background: #E8713A;
-  color: white; font-size: 0.75rem; font-weight: 600;
+  padding: 0.25rem 1.25rem; background: #FF671F;
+  color: #31261D; font-size: 0.75rem; font-weight: 600;
   border: none; border-radius: 9999px; cursor: pointer;
   transition: all 150ms ease; white-space: nowrap; flex-shrink: 0;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.35); text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.35);
 }
-.callback-cta-btn:hover { background: #D4622A; transform: scale(1.02); }
+.callback-cta-btn:hover { filter: brightness(0.95); transform: scale(1.02); }
 .callback-cta-btn:active { transform: scale(0.98); }
 
 @media (max-width: 480px) {

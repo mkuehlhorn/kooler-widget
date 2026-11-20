@@ -3,8 +3,8 @@
 
 /* ── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
-  --weggy-primary:       #E8713A;
-  --weggy-primary-hover: #D4622A;
+  --weggy-primary:       #FF671F;
+  --weggy-primary-hover: #FF671F;
   --weggy-text:          #1F2937;
   --weggy-text-secondary:#6B7280;
   --weggy-glass-bg:      rgba(255, 255, 255, 0.34);
@@ -14,8 +14,8 @@
   --weggy-radius-full:   9999px;
 
   /* Legacy aliases */
-  --widget-primary: #E8713A;
-  --widget-accent:  #E8713A;
+  --widget-primary: #FF671F;
+  --widget-accent:  #FF671F;
 }
 
 /* ── Base reset ─────────────────────────────────────────────────────────────── */

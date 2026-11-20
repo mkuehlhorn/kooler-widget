@@ -131,8 +131,8 @@ export function ChatWidget({ config }: ChatWidgetProps) {
         <div className="widget-success-content">
           <div className="widget-success-icon">
             <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-              <circle cx="28" cy="28" r="28" fill="rgba(232,113,58,0.15)" />
-              <path d="M18 28L25 35L38 20" stroke="#E8713A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="28" cy="28" r="28" fill="rgba(255,103,31,0.15)" />
+              <path d="M18 28L25 35L38 20" stroke="#FF671F" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <h3>Request Received!</h3>
@@ -200,7 +200,7 @@ const STYLES = `
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 0.5rem; color: rgba(0,0,0,0.45);
 }
-.widget-loading-spinner { color: #E8713A; }
+.widget-loading-spinner { color: #FF671F; }
 .widget-loading p { font-size: 0.75rem; }
 .widget-error-state {
   flex: 1; display: flex; flex-direction: column;
@@ -209,7 +209,7 @@ const STYLES = `
 }
 .widget-error-state p { font-size: 0.75rem; max-width: 240px; }
 .widget-error-retry {
-  padding: 0.375rem 1.25rem; background: #E8713A; color: white;
+  padding: 0.375rem 1.25rem; background: #FF671F; color: #31261D;
   border: none; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
 }
 .widget-success-content { text-align: center; padding: 1.5rem; }

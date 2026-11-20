@@ -93,12 +93,12 @@ const STYLES = `
 /* Send button — 28px circle */
 .chat-input-send {
   width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
-  background: #E8713A; color: white; border: none; border-radius: 50%;
+  background: #FF671F; color: #31261D; border: none; border-radius: 50%;
   cursor: pointer; transition: all 150ms ease; flex-shrink: 0;
   box-shadow: 0 4px 14px rgba(0,0,0,0.35);
 }
-.chat-input-send:hover:not(:disabled) { background: #D4622A; }
-.chat-input-send:disabled { background: #E8713A; opacity: 0.7; cursor: default; }
+.chat-input-send:hover:not(:disabled) { filter: brightness(0.95); }
+.chat-input-send:disabled { background: #FF671F; opacity: 0.7; cursor: default; }
 .chat-input-send svg { width: 14px; height: 14px; }
 
 @media (max-width: 480px) {
