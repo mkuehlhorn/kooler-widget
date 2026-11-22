@@ -204,6 +204,17 @@
 
   function getIsOpen(): boolean { return isOpen; }
 
+  // ask(text): open the chat and send `text` as the visitor's message. Used by
+  // the pricing page's top-of-fold box. Held until the widget says it is ready.
+  let pendingAsk: string | null = null;
+  function ask(text: string): void {
+    const t = String(text ?? '').trim().slice(0, 500);
+    if (!t) return;
+    if (!isReady) { pendingAsk = t; return; }
+    open();
+    postToWidget('weggy:ask', { text: t });
+  }
+
   // ─── Listen for messages from the iframe ─────────────────────────────────────
 
   window.addEventListener('message', (event: MessageEvent) => {
@@ -217,6 +228,7 @@
     switch (data.type) {
       case 'weggy:ready':
         isReady = true;
+        if (pendingAsk) { const t = pendingAsk; pendingAsk = null; ask(t); }
         break;
       case 'weggy:open':
         isOpen = true;
@@ -270,6 +282,7 @@
     isOpen: () => boolean;
     destroy: () => void;
     getMode: () => 'dock' | 'inline';
+    ask: (text: string) => void;
   }
 
   (window as Window & { WeggyWidget?: WeggyWidgetAPI }).WeggyWidget = {
@@ -279,5 +292,6 @@
     isOpen: getIsOpen,
     destroy,
     getMode: () => mode,
+    ask,
   };
 })();

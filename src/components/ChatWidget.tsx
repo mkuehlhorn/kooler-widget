@@ -51,14 +51,23 @@ export function ChatWidget({ config }: ChatWidgetProps) {
   // Listen for open/close commands from parent
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
-      const data = event.data as { source?: string; type?: string };
+      const data = event.data as { source?: string; type?: string; text?: unknown };
       if (data?.source !== 'weggy-loader') return;
       if (data.type === 'weggy:open' && widgetState === 'collapsed') setWidgetState('expanded');
       else if (data.type === 'weggy:close' && widgetState !== 'collapsed') setWidgetState('collapsed');
+      else if (data.type === 'weggy:ask' && typeof data.text === 'string') {
+        // The page's own ask box (pricing page, Matt GO 2026-11-22): open the
+        // chat and send what the visitor typed as their first message.
+        const text = data.text.trim().slice(0, 500);
+        if (!text) return;
+        setShowChips(false);
+        if (widgetState !== 'expanded') setWidgetState('expanded');
+        void (async () => { await initSession(); await sendMessage(text); })();
+      }
     }
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [widgetState]);
+  }, [widgetState, initSession, sendMessage]);
 
   // Trigger session init (and greeting message) as soon as the widget opens
   useEffect(() => {

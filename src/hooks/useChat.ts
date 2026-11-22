@@ -108,7 +108,20 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
     );
   }, []);
 
-  const initSession = useCallback(async (): Promise<ChatSession | null> => {
+  // One session start at a time: the page's "ask" box and the open-effect can
+  // both call this in the same tick; without the shared promise they would
+  // create two sessions and the late greeting would wipe the asked question.
+  const initInFlight = useRef<Promise<ChatSession | null> | null>(null);
+  const initSession = useCallback((): Promise<ChatSession | null> => {
+    if (sessionRef.current) return Promise.resolve(sessionRef.current);
+    if (initInFlight.current) return initInFlight.current;
+    const p = doInitSession().finally(() => { initInFlight.current = null; });
+    initInFlight.current = p;
+    return p;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config.market, config.language, config.greeting, streamGreeting]);
+
+  const doInitSession = async (): Promise<ChatSession | null> => {
     if (sessionRef.current) return sessionRef.current;
 
     // Restore from sessionStorage in mock/dev mode (survives hot-reloads)
@@ -178,7 +191,7 @@ export function useChat({ config }: { config: WidgetConfig }): UseChatResult {
     } finally {
       setIsInitializing(false);
     }
-  }, [config.market, config.language, config.greeting, streamGreeting]);
+  };
 
   const sendMessage = useCallback(
     async (content: string): Promise<void> => {
